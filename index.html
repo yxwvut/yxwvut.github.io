@@ -58,7 +58,7 @@
     <div class="tagcloud-mask"></div>  
 <div class="tagcloud" id="tagcloud">
     <div class="tagcloud-inner">
-        <a href="/tags/DNS/" style="font-size: 14px;">DNS</a> <a href="/tags/linux/" style="font-size: 14px;">linux</a> <a href="/tags/实验/" style="font-size: 14px;">实验</a> <a href="/tags/服务servers/" style="font-size: 14px;">服务servers</a>
+        <a href="/tags/DNS/" style="font-size: 14px;">DNS</a> <a href="/tags/linux/" style="font-size: 14px;">linux</a> <a href="/tags/实验/" style="font-size: 14px;">实验</a> <a href="/tags/文件管理/" style="font-size: 14px;">文件管理</a> <a href="/tags/服务servers/" style="font-size: 14px;">服务servers</a>
     </div>
 </div>
     <header class="header" id="header">
@@ -174,7 +174,7 @@
                     </div>
                     <div class="mobile-nav-tagcloud">
                         <div class="mobile-tagcloud-inner">
-                            <a href="/tags/DNS/" style="font-size: 14px;">DNS</a> <a href="/tags/linux/" style="font-size: 14px;">linux</a> <a href="/tags/实验/" style="font-size: 14px;">实验</a> <a href="/tags/服务servers/" style="font-size: 14px;">服务servers</a>
+                            <a href="/tags/DNS/" style="font-size: 14px;">DNS</a> <a href="/tags/linux/" style="font-size: 14px;">linux</a> <a href="/tags/实验/" style="font-size: 14px;">实验</a> <a href="/tags/文件管理/" style="font-size: 14px;">文件管理</a> <a href="/tags/服务servers/" style="font-size: 14px;">服务servers</a>
                         </div>
                     </div>
                 </div>
@@ -234,7 +234,7 @@
         <div class="post-content syuanpi riseIn-light back-3">
             
                 
-                    <p>DNS访问的顺序<br><img src="/images/Image 2.jpg" alt="环境"><br>实现DNS转发模拟实验，需要6台虚拟机</p>
+                    <p>DNS访问的顺序<br><img src="/images/Image 1.jpg" alt="环境"><br>实现DNS转发模拟实验，需要6台虚拟机</p>
 <table>
 <thead>
 <tr>
@@ -276,9 +276,11 @@
 </tr>
 </tbody>
 </table>
-<p>配置顺序：<br>主&gt;从&gt;com&gt;根&gt;S&gt;C</p>
+<p>配置思路顺序：<br>主&gt;从&gt;com&gt;根&gt;S&gt;C</p>
+<p>实验前请妥善备份好自己的配置文件，本实验需要配置变更目录为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">/etc/named.conf</div><div class="line">/var/named/named.ca</div><div class="line">/etc/named.rfc1912.zones</div><div class="line">/var/named/root.zone</div><div class="line">		  /com.zone</div><div class="line">		  /nigaha.com.zone</div></pre></td></tr></table></figure></p>
+<p>实验过程中可能需要的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">检查named.conf文件语法：</div><div class="line">named-checkconf [filename]</div><div class="line">检查区域配置文件语法：</div><div class="line">named-checkzone  zone [filename]</div><div class="line">dig “域名” @IP</div></pre></td></tr></table></figure></p>
 <p>配置前为了放置中间出现意外首先确定<br>关闭selinux，清空iptables，安装bind</p>
-<h3 id="14中配置"><a href="#14中配置" class="headerlink" title="14中配置"></a>14中配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">vim /etc/named.conf</div><div class="line">注释掉</div><div class="line">	#       listen-on port 53 &#123; 127.0.0.1; &#125;;</div><div class="line">	#       allow-query     &#123; localhost; &#125;;</div></pre></td></tr></table></figure>
+<h3 id="一、在14中配置"><a href="#一、在14中配置" class="headerlink" title="一、在14中配置"></a>一、在14中配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">vim /etc/named.conf</div><div class="line"></div><div class="line">注释掉</div><div class="line">	#       listen-on port 53 &#123; 127.0.0.1; &#125;;</div><div class="line">	#       allow-query     &#123; localhost; &#125;;</div></pre></td></tr></table></figure>
 <p>让域内所有服务器知道自己是根服务器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">vim /var/named/named.ca</div><div class="line">修改</div><div class="line">	;; QUESTION SECTION:</div><div class="line">	;.                              IN      NS</div><div class="line">	</div><div class="line">	;; ANSWER SECTION:</div><div class="line">	.                       518400  IN      NS      a.root-servers.net.</div><div class="line">	a.root-servers.net.     3600000 IN      A       172.18.51.14</div><div class="line">下面多余部分删掉就可以不放心可以注释掉</div></pre></td></tr></table></figure></p>
 <p>分发/var/named/named.ca给所有主机13、15、16、17<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">scp /var/named/named.ca 172.18.51.17:/var/named</div><div class="line">Are you sure you want to continue connecting (yes/no)? yes</div><div class="line">root@172.18.51.17&apos;s password:</div><div class="line">named.ca                                                               100%  478     0.5KB/s   00:00</div></pre></td></tr></table></figure></p>
 <p>在/etc/named.rfc1912.zones中配置根<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">vim /etc/named.rfc1912.zones</div><div class="line">#添加</div><div class="line">zone &quot;.&quot; IN &#123;</div><div class="line">        type master;</div><div class="line">        file &quot;root.zone&quot;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
@@ -289,17 +291,79 @@
 <p>创建com的域<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">vim /var/named/com.zone</div><div class="line"></div><div class="line">$TTL 86400      ; 1 day</div><div class="line">@               IN SOA  dns1.nigaha.com. admin.nigaha.com. (</div><div class="line">                                1002    ; serial</div><div class="line">                                86400   ; refresh (1 day)</div><div class="line">                                3600    ; retry (1 hour)</div><div class="line">                                604800  ; expire (1 week)</div><div class="line">                                10800   ; minimum (3 hours)</div><div class="line">                                )</div><div class="line">                        NS      dns1</div><div class="line">nigaha                  NS      dns2</div><div class="line">nigaha                  NS      dns3</div><div class="line">dns1                    A       172.18.51.15</div><div class="line">dns2                    A       172.18.51.16</div><div class="line">dns3                    A       172.18.51.16</div><div class="line">websrv                  A       172.18.51.111</div><div class="line">www                     CNAME   websrv</div></pre></td></tr></table></figure></p>
 <p>如果com拥有从服务器的话dns1中ip必须为本机ip，不然不影响实验效果<br>（另外需要再加条NS记录指向从服务器也就是dns3，如果不加不影响效果，但是你要的从服务器就没卵用了）<br>注意！！！重启服务</p>
 <p>套路有点不对，现在配主从服务器</p>
-<h3 id="16中配置"><a href="#16中配置" class="headerlink" title="16中配置"></a>16中配置</h3><p>在“options”的段里<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">vim /etc/named.conf</div><div class="line">注释掉</div><div class="line">	#       listen-on port 53 &#123; 127.0.0.1; &#125;;</div><div class="line">	#       allow-query     &#123; localhost; &#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="二、在16中配置"><a href="#二、在16中配置" class="headerlink" title="二、在16中配置"></a>二、在16中配置</h3><p>在“options”的段里<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">vim /etc/named.conf</div><div class="line">注释掉</div><div class="line">	#       listen-on port 53 &#123; 127.0.0.1; &#125;;</div><div class="line">	#       allow-query     &#123; localhost; &#125;;</div></pre></td></tr></table></figure></p>
 <p>配置域<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#添加</div><div class="line">vim /etc/named.rfc1912.zones</div><div class="line">zone &quot;nigaha.com&quot; &#123;</div><div class="line">        type master;</div><div class="line">        file &quot;nigaha.com.zone&quot;;</div><div class="line">//      allow-transfer &#123; any;&#125;;         #这个可以忽略</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <p>创建区域数据文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">vim /var/named/nigaha.com.zone</div><div class="line"></div><div class="line">$TTL 86400      ; 1 day</div><div class="line">@               IN SOA  dns1.nigaha.com. admin.nigaha.com. (</div><div class="line">                                1002    ; serial</div><div class="line">                                86400   ; refresh (1 day)</div><div class="line">                                3600    ; retry (1 hour)</div><div class="line">                                604800  ; expire (1 week)</div><div class="line">                                10800   ; minimum (3 hours)</div><div class="line">                                )</div><div class="line">                                NS      dns1.nigaha.com.</div><div class="line">                                NS      dns2.nigaha.com.</div><div class="line"></div><div class="line">dns1                    A       172.18.51.14</div><div class="line">dns2                    A       172.18.51.17</div><div class="line">websrv                  A       172.18.51.14</div><div class="line">www                     CNAME   websrv</div></pre></td></tr></table></figure></p>
-<h3 id="17中配置"><a href="#17中配置" class="headerlink" title="17中配置"></a>17中配置</h3><p>在“options”的段里<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">vim /etc/named.conf</div><div class="line">注释掉</div><div class="line">	#       listen-on port 53 &#123; 127.0.0.1; &#125;;</div><div class="line">	#       allow-query     &#123; localhost; &#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="三、在17中配置"><a href="#三、在17中配置" class="headerlink" title="三、在17中配置"></a>三、在17中配置</h3><p>在“options”的段里<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">vim /etc/named.conf</div><div class="line">注释掉</div><div class="line">	#       listen-on port 53 &#123; 127.0.0.1; &#125;;</div><div class="line">	#       allow-query     &#123; localhost; &#125;;</div></pre></td></tr></table></figure></p>
 <p>配置域<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#添加</div><div class="line">zone &quot;nigaha.com&quot; &#123;</div><div class="line">        type slave;</div><div class="line">        masters &#123;172.18.51.16; &#125;;</div><div class="line">        file &quot;slaves/nigaha.com.slaves.zone&quot;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <p>看看有木有域数据文件呀<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /var/named/slaves;ls</div><div class="line">nigaha.com.slaves.zone</div></pre></td></tr></table></figure></p>
-<h3 id="13中配置"><a href="#13中配置" class="headerlink" title="13中配置"></a>13中配置</h3><p>先确定下根在不在<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">vim /var/named/named.ca</div><div class="line"></div><div class="line">;; QUESTION SECTION:</div><div class="line">;.                              IN      NS</div><div class="line"></div><div class="line">;; ANSWER SECTION:</div><div class="line">.                       518400  IN      NS      a.root-servers.net.</div><div class="line">a.root-servers.net.     3600000 IN      A       172.18.51.14    #对的就是他！</div></pre></td></tr></table></figure></p>
+<h3 id="四、在13中配置"><a href="#四、在13中配置" class="headerlink" title="四、在13中配置"></a>四、在13中配置</h3><p>先确定下根在不在<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">vim /var/named/named.ca</div><div class="line"></div><div class="line">;; QUESTION SECTION:</div><div class="line">;.                              IN      NS</div><div class="line"></div><div class="line">;; ANSWER SECTION:</div><div class="line">.                       518400  IN      NS      a.root-servers.net.</div><div class="line">a.root-servers.net.     3600000 IN      A       172.18.51.14    #对的就是他！</div></pre></td></tr></table></figure></p>
 <p>查看配置文件/ect/named.conf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">vim /etc/named.conf</div><div class="line">注释掉</div><div class="line">	#       listen-on port 53 &#123; 127.0.0.1; &#125;;</div><div class="line">	#       allow-query     &#123; localhost; &#125;;</div></pre></td></tr></table></figure></p>
 <p>重启服务！重启服务！重启服务！</p>
-<h3 id="12号验证"><a href="#12号验证" class="headerlink" title="12号验证"></a>12号验证</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">dig www.nigaha.com @172.18.51.13</div><div class="line"></div><div class="line">; &lt;&lt;&gt;&gt; DiG 9.8.2rc1-RedHat-9.8.2-0.62.rc1.el6 &lt;&lt;&gt;&gt; www.nigaha.com @172.18.51.13</div><div class="line">;; global options: +cmd</div><div class="line">;; Got answer:</div><div class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 59258</div><div class="line">;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 2, ADDITIONAL: 2</div><div class="line"></div><div class="line">;; QUESTION SECTION:</div><div class="line">;www.nigaha.com.			IN	A</div><div class="line"></div><div class="line">;; ANSWER SECTION:</div><div class="line">www.nigaha.com.		86400	IN	CNAME	websrv.nigaha.com.</div><div class="line">websrv.nigaha.com.	86400	IN	A	172.18.51.14</div><div class="line"></div><div class="line">;; AUTHORITY SECTION:</div><div class="line">nigaha.com.		86400	IN	NS	dns1.nigaha.com.</div><div class="line">nigaha.com.		86400	IN	NS	dns2.nigaha.com.</div><div class="line"></div><div class="line">;; ADDITIONAL SECTION:</div><div class="line">dns2.nigaha.com.	86400	IN	A	172.18.51.17</div><div class="line">dns1.nigaha.com.	86400	IN	A	172.18.51.14</div><div class="line"></div><div class="line">;; Query time: 11 msec</div><div class="line">;; SERVER: 172.18.51.13#53(172.18.51.13)</div><div class="line">;; WHEN: Mon Sep 25 10:52:43 2017</div><div class="line">;; MSG SIZE  rcvd: 139</div></pre></td></tr></table></figure>
+<h3 id="五、在12号验证"><a href="#五、在12号验证" class="headerlink" title="五、在12号验证"></a>五、在12号验证</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">dig www.nigaha.com @172.18.51.13</div><div class="line"></div><div class="line">; &lt;&lt;&gt;&gt; DiG 9.8.2rc1-RedHat-9.8.2-0.62.rc1.el6 &lt;&lt;&gt;&gt; www.nigaha.com @172.18.51.13</div><div class="line">;; global options: +cmd</div><div class="line">;; Got answer:</div><div class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 59258</div><div class="line">;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 2, ADDITIONAL: 2</div><div class="line"></div><div class="line">;; QUESTION SECTION:</div><div class="line">;www.nigaha.com.			IN	A</div><div class="line"></div><div class="line">;; ANSWER SECTION:</div><div class="line">www.nigaha.com.		86400	IN	CNAME	websrv.nigaha.com.</div><div class="line">websrv.nigaha.com.	86400	IN	A	172.18.51.14</div><div class="line"></div><div class="line">;; AUTHORITY SECTION:</div><div class="line">nigaha.com.		86400	IN	NS	dns1.nigaha.com.</div><div class="line">nigaha.com.		86400	IN	NS	dns2.nigaha.com.</div><div class="line"></div><div class="line">;; ADDITIONAL SECTION:</div><div class="line">dns2.nigaha.com.	86400	IN	A	172.18.51.17</div><div class="line">dns1.nigaha.com.	86400	IN	A	172.18.51.14</div><div class="line"></div><div class="line">;; Query time: 11 msec</div><div class="line">;; SERVER: 172.18.51.13#53(172.18.51.13)</div><div class="line">;; WHEN: Mon Sep 25 10:52:43 2017</div><div class="line">;; MSG SIZE  rcvd: 139</div></pre></td></tr></table></figure>
 <p>成功！</p>
+
+                
+            
+        
+        </div>
+        
+    </article>
+    
+
+    
+        
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年6月21日</span>
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                <a href="/2017/06/21/linux软件包管理/">linux软件包管理</a>
+            
+            </h1>
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                
+                    <h1 id="Linux环境下的文件管理——软件包管理"><a href="#Linux环境下的文件管理——软件包管理" class="headerlink" title="Linux环境下的文件管理——软件包管理"></a>Linux环境下的文件管理——软件包管理</h1><h2 id="软件包分类"><a href="#软件包分类" class="headerlink" title="软件包分类"></a>软件包分类</h2><h3 id="源码包"><a href="#源码包" class="headerlink" title="源码包"></a>源码包</h3><ul>
+<li>优点:<ul>
+<li>开源，如果有足够的能力，可以修改源代码</li>
+<li>可以自由选择所需的功能</li>
+<li>软件是编译安装，所以更加适合自己的系统，更加稳定也效率更高</li>
+<li>卸载方便</li>
+</ul>
+</li>
+<li><p>缺点:</p>
+<ul>
+<li>安装过程步骤较多，尤其安装较大的软件集合时(如LAMP环境)，容易出现拼写错误</li>
+<li>编译过程时间较长，安装比二进制安装时间长</li>
+<li>因为是编译安装，安装过程中一旦报错，新手很难解决</li>
+</ul>
+</li>
+<li><p>脚本安装包：就是把复杂的软件包安装过程写成了程序脚本，初学者可以执行程序脚本实现一键安装。但实际安装的还是源码包和二进制包</p>
+<ul>
+<li>优点是安装简单快捷</li>
+<li>缺点是完全丧失了自定义性</li>
+</ul>
+</li>
+</ul>
+<h1 id="二进制包（RPM包，系统默认包）"><a href="#二进制包（RPM包，系统默认包）" class="headerlink" title="二进制包（RPM包，系统默认包）"></a>二进制包（RPM包，系统默认包）</h1><ul>
+<li>优点:<ul>
+<li>包管理系统简单，只通过几个命令就可以实现包的安装，升级，查询和卸载</li>
+<li>安装速度比源码包安装快很多</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>经过编译，不再可以看到源代码</li>
+<li>功能选择不如源码包灵活</li>
+<li>依赖性</li>
+</ul>
+</li>
+</ul>
 
                 
             
@@ -337,7 +401,7 @@
             <div class="copyright">
     <div class="info">
         <span>&copy;</span>
-        <span>1988 ~ 2017</span>
+        <span>2016 ~ 2017</span>
         <span>❤</span>
         <span>nigaha</span>
     </div>
