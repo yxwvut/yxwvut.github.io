@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <title> linux软件包管理 · 言在语中 </title>
+    <title> linux_YUM在线安装<!--more--> · 言在语中 </title>
     <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -212,12 +212,12 @@
     <article class="post">
         <header class="post-header">
             <div class="post-time syuanpi riseIn-light back-1">
-                <span>2017年6月21日</span>
+                <span>2017年6月29日</span>
                 
             </div>
             <h1 class="post-title syuanpi riseIn-light back-2">
             
-                linux软件包管理
+                linux_YUM在线安装<!--more-->
             
             </h1>
             
@@ -234,42 +234,66 @@
         </header>
         <div class="post-content syuanpi riseIn-light back-3">
             
-                <h1 id="Linux环境下的文件管理——软件包管理"><a href="#Linux环境下的文件管理——软件包管理" class="headerlink" title="Linux环境下的文件管理——软件包管理"></a>Linux环境下的文件管理——软件包管理</h1><h2 id="软件包分类"><a href="#软件包分类" class="headerlink" title="软件包分类"></a>软件包分类</h2><h3 id="源码包"><a href="#源码包" class="headerlink" title="源码包"></a>源码包</h3><ul>
-<li>优点:<ul>
-<li>开源，如果有足够的能力，可以修改源代码</li>
-<li>可以自由选择所需的功能</li>
-<li>软件是编译安装，所以更加适合自己的系统，更加稳定也效率更高</li>
-<li>卸载方便</li>
-</ul>
-</li>
-<li><p>缺点:</p>
-<ul>
-<li>安装过程步骤较多，尤其安装较大的软件集合时(如LAMP环境)，容易出现拼写错误</li>
-<li>编译过程时间较长，安装比二进制安装时间长</li>
-<li>因为是编译安装，安装过程中一旦报错，新手很难解决</li>
-</ul>
-</li>
-<li><p>脚本安装包：就是把复杂的软件包安装过程写成了程序脚本，初学者可以执行程序脚本实现一键安装。但实际安装的还是源码包和二进制包</p>
-<ul>
-<li>优点是安装简单快捷</li>
-<li>缺点是完全丧失了自定义性</li>
-</ul>
-</li>
-</ul>
-<h1 id="二进制包（RPM包，系统默认包）"><a href="#二进制包（RPM包，系统默认包）" class="headerlink" title="二进制包（RPM包，系统默认包）"></a>二进制包（RPM包，系统默认包）</h1><ul>
-<li>优点:<ul>
-<li>包管理系统简单，只通过几个命令就可以实现包的安装，升级，查询和卸载</li>
-<li>安装速度比源码包安装快很多</li>
-</ul>
-</li>
-<li>缺点：<ul>
-<li>经过编译，不再可以看到源代码</li>
-<li>功能选择不如源码包灵活</li>
-<li>依赖性</li>
-</ul>
-</li>
-</ul>
-
+                <h1 id="Linux环境下的文件管理——YUM在线安装"><a href="#Linux环境下的文件管理——YUM在线安装" class="headerlink" title="Linux环境下的文件管理——YUM在线安装"></a>Linux环境下的文件管理——YUM在线安装</h1><a id="more"></a>
+<h1 id="Yum源文件"><a href="#Yum源文件" class="headerlink" title="Yum源文件"></a>Yum源文件</h1><h2 id="文件目录"><a href="#文件目录" class="headerlink" title="文件目录"></a>文件目录</h2><p><code>/etc/yum.repos.d</code></p>
+<h2 id="默认文件"><a href="#默认文件" class="headerlink" title="默认文件"></a>默认文件</h2><table>
+<thead>
+<tr>
+<th>CentOS-Base.repo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CentOS-Debuginfo.repo</td>
+</tr>
+<tr>
+<td>CentOS-Media.repo</td>
+</tr>
+<tr>
+<td>CentOS-Vault.repo</td>
+</tr>
+</tbody>
+</table>
+<h2 id="CentOS-Base-repo"><a href="#CentOS-Base-repo" class="headerlink" title="CentOS-Base.repo"></a>CentOS-Base.repo</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[base]</div><div class="line">name=CentOS-$releaserver - Base</div><div class="line">mirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=os</div><div class="line">#baseurl=http://mirror.centos.org/centos/$releasevver/os/$basearch/</div><div class="line">gpgcheck=1</div><div class="line">gpgkey=file:///etc/pki/rpm=gpg/RPM-GPG-KEY=CentOS-6</div><div class="line">#上述中file后面`://`双斜杠代表的是协议的意思，即file协议</div></pre></td></tr></table></figure>
+<h2 id="vi-etc-yum-repos-d-CentOS-Base-repo"><a href="#vi-etc-yum-repos-d-CentOS-Base-repo" class="headerlink" title="vi /etc/yum.repos.d/CentOS-Base.repo"></a>vi /etc/yum.repos.d/CentOS-Base.repo</h2><table>
+<thead>
+<tr>
+<th>[base]</th>
+<th>容器名称，一定要放在[]中</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>容器说明，可以自己随便写</td>
+</tr>
+<tr>
+<td>mirrorlist</td>
+<td>镜像站点，这个可以注释掉</td>
+</tr>
+<tr>
+<td>baseurl</td>
+<td>我们的YUM源服务器的地址，默认是CentOS官方的yum源服务器，是可以使用的，如果你觉得慢可以改成你喜欢的yum源地址</td>
+</tr>
+<tr>
+<td>enabled</td>
+<td>此容器是否生效，如果不写或写成enable=1都是生效，写成enable=0就是不生效</td>
+</tr>
+<tr>
+<td>gpgcheck</td>
+<td>如果是1是指RPM的数字证书生效，如果是0则不生效</td>
+</tr>
+<tr>
+<td>gpgkey</td>
+<td>数字证书的公钥文件保存位置，不用修改</td>
+</tr>
+</tbody>
+</table>
+<h1 id="光盘搭建yum源"><a href="#光盘搭建yum源" class="headerlink" title="光盘搭建yum源"></a>光盘搭建yum源</h1><h2 id="挂载光盘"><a href="#挂载光盘" class="headerlink" title="挂载光盘"></a>挂载光盘</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#建立挂载点</div><div class="line">mkdir /mnt/cdrom</div><div class="line">#挂载光盘</div><div class="line">mount /dev/cdrom mnt/cdrom</div></pre></td></tr></table></figure>
+<h2 id="使网络Yum源失效"><a href="#使网络Yum源失效" class="headerlink" title="使网络Yum源失效"></a>使网络Yum源失效</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#进入yum源目录</div><div class="line">cd /etc/yum.repos.d/</div><div class="line">#修改yum源文件后缀名，使其失效</div><div class="line">mv CentOS-Base.repo CentOS-Base.repo.bak</div></pre></td></tr></table></figure>
+<h2 id="使光盘Yum源生效"><a href="#使光盘Yum源生效" class="headerlink" title="使光盘Yum源生效"></a>使光盘Yum源生效</h2><p><code>vim CentOS-Media.repo</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[c6-media]</div><div class="line">name=CentOS-$releasever - Media</div><div class="line">basrurl=file://mnt/cdrom  # 地址为你自己的光盘挂载地址</div><div class="line">#		file:///media/cdrom</div><div class="line">#		file:///media/cdrecorder # 注释这两个不存在的地址</div><div class="line">gpgcheck=1</div><div class="line">enabled=1  # 把enabled=0改为enabled=1，让这个yum源配置文件生效</div><div class="line">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6</div></pre></td></tr></table></figure>
+<h1 id="Yum命令"><a href="#Yum命令" class="headerlink" title="Yum命令"></a>Yum命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"># 查询所有软件包列表</div><div class="line">[root@localhost ~]# yum list</div><div class="line"></div><div class="line"># 搜索服务器上所有和关键字相关的包</div><div class="line">[root@localhost ~]# yum search 关键字</div><div class="line"></div><div class="line"># 安装命令</div><div class="line">[root@localhost ~]# yum -y install 包名</div><div class="line"> - 选项：</div><div class="line"> &gt; install 	安装</div><div class="line"> &gt; -y 		自动回答yes</div><div class="line">[root@localhost ~]# yum -y install gcc 	# C语言编译器</div><div class="line"></div><div class="line"># 升级命令</div><div class="line">[root@localhost ~]# yum -y update 包名</div><div class="line"> - 选项：</div><div class="line"> &gt; update 	升级</div><div class="line"> &gt; -y 		自动回答yes</div><div class="line"></div><div class="line"># 升级本服务器下所有的安装包，并且更新linux新内核，慎用，CentOS6.3及以前会有问题</div><div class="line">[root@localhost ~]# yum -y update</div><div class="line"></div><div class="line"># 卸载</div><div class="line">[root@localhost ~]# yum -y remove 包名</div><div class="line"> - 选项：</div><div class="line"> - remove	卸载</div><div class="line"> - -y 		自动回答yes</div><div class="line"># 服务器使用最小化安装，用什么软件安装什么，尽量不卸载</div><div class="line"></div><div class="line"># 列出所有可用的软件组列表</div><div class="line">[root@localhost ~]# yum grouplist</div><div class="line"></div><div class="line"># 安装指定软件组，组名可以由grouplist查询出来</div><div class="line">[root@localhost ~]# yum groupinstall 软件组名</div><div class="line"># 注意：软件组名必须是英文</div><div class="line">LANG=en_US # 修改语言，让显示的grouplist是英文列表</div><div class="line"></div><div class="line"># 卸载指定软件组</div><div class="line">[root@localhost ~]# yum groupremove 软件组名</div></pre></td></tr></table></figure>
             
         
         </div>
@@ -282,12 +306,12 @@
         
     <nav class="article-page">
         
-            <a href="/2017/06/21/DNS-root_server-simulated/" id="art-left" class="art-right">
-                <span class="next-title">
-                    DNS根服务器模拟实验<i class="iconfont icon-right"></i> 
+        
+            <a href="/2017/06/29/linux_软件包管理/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>linux_软件包管理
                 </span>
             </a>
-        
         
     </nav>
 

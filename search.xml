@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[linux_YUM在线安装]]></title>
+    <url>%2F2017%2F06%2F29%2Flinux_YUM%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%2F</url>
+    <content type="text"><![CDATA[Linux环境下的文件管理——YUM在线安装 Yum源文件文件目录/etc/yum.repos.d 默认文件 CentOS-Base.repo CentOS-Debuginfo.repo CentOS-Media.repo CentOS-Vault.repo CentOS-Base.repo1234567[base]name=CentOS-$releaserver - Basemirrorlist=http://mirrorlist.centos.org/?release=$releasever&amp;arch=$basearch&amp;repo=os#baseurl=http://mirror.centos.org/centos/$releasevver/os/$basearch/gpgcheck=1gpgkey=file:///etc/pki/rpm=gpg/RPM-GPG-KEY=CentOS-6#上述中file后面`://`双斜杠代表的是协议的意思，即file协议 vi /etc/yum.repos.d/CentOS-Base.repo [base] 容器名称，一定要放在[]中 name 容器说明，可以自己随便写 mirrorlist 镜像站点，这个可以注释掉 baseurl 我们的YUM源服务器的地址，默认是CentOS官方的yum源服务器，是可以使用的，如果你觉得慢可以改成你喜欢的yum源地址 enabled 此容器是否生效，如果不写或写成enable=1都是生效，写成enable=0就是不生效 gpgcheck 如果是1是指RPM的数字证书生效，如果是0则不生效 gpgkey 数字证书的公钥文件保存位置，不用修改 光盘搭建yum源挂载光盘1234#建立挂载点mkdir /mnt/cdrom#挂载光盘mount /dev/cdrom mnt/cdrom 使网络Yum源失效1234#进入yum源目录cd /etc/yum.repos.d/#修改yum源文件后缀名，使其失效mv CentOS-Base.repo CentOS-Base.repo.bak 使光盘Yum源生效vim CentOS-Media.repo 12345678[c6-media]name=CentOS-$releasever - Mediabasrurl=file://mnt/cdrom # 地址为你自己的光盘挂载地址# file:///media/cdrom# file:///media/cdrecorder # 注释这两个不存在的地址gpgcheck=1enabled=1 # 把enabled=0改为enabled=1，让这个yum源配置文件生效gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6 Yum命令123456789101112131415161718192021222324252627282930313233343536373839# 查询所有软件包列表[root@localhost ~]# yum list# 搜索服务器上所有和关键字相关的包[root@localhost ~]# yum search 关键字# 安装命令[root@localhost ~]# yum -y install 包名 - 选项： &gt; install 安装 &gt; -y 自动回答yes[root@localhost ~]# yum -y install gcc # C语言编译器# 升级命令[root@localhost ~]# yum -y update 包名 - 选项： &gt; update 升级 &gt; -y 自动回答yes# 升级本服务器下所有的安装包，并且更新linux新内核，慎用，CentOS6.3及以前会有问题[root@localhost ~]# yum -y update# 卸载[root@localhost ~]# yum -y remove 包名 - 选项： - remove 卸载 - -y 自动回答yes# 服务器使用最小化安装，用什么软件安装什么，尽量不卸载# 列出所有可用的软件组列表[root@localhost ~]# yum grouplist# 安装指定软件组，组名可以由grouplist查询出来[root@localhost ~]# yum groupinstall 软件组名# 注意：软件组名必须是英文LANG=en_US # 修改语言，让显示的grouplist是英文列表# 卸载指定软件组[root@localhost ~]# yum groupremove 软件组名]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>文件管理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[linux_软件包管理]]></title>
+    <url>%2F2017%2F06%2F29%2Flinux_%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%2F</url>
+    <content type="text"><![CDATA[Linux环境下的文件管理——软件包管理软件包分类 源码包 优点: 开源，如果有足够的能力，可以修改源代码 可以自由选择所需的功能 软件是编译安装，所以更加适合自己的系统，更加稳定也效率更高 卸载方便 缺点: 安装过程步骤较多，尤其安装较大的软件集合时(如LAMP环境)，容易出现拼写错误 编译过程时间较长，安装比二进制安装时间长 因为是编译安装，安装过程中一旦报错，新手很难解决 脚本安装包：就是把复杂的软件包安装过程写成了程序脚本，初学者可以执行程序脚本实现一键安装。但实际安装的还是源码包和二进制包 优点是安装简单快捷 缺点是完全丧失了自定义性 二进制包（RPM包，系统默认包） 优点: 包管理系统简单，只通过几个命令就可以实现包的安装，升级，查询和卸载 安装速度比源码包安装快很多 缺点： 经过编译，不再可以看到源代码 功能选择不如源码包灵活 依赖性]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>文件管理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[linux_RPM命令管理]]></title>
+    <url>%2F2017%2F06%2F29%2Flinux_RPM%E5%91%BD%E4%BB%A4%E7%AE%A1%E7%90%86%2F</url>
+    <content type="text"><![CDATA[Linux环境下的文件管理——RPM命令管理 RPM命令管理RPM包命名原则 httpd-2.2.15-15.el6.centos.1.i686.rpm httpd软件包名 2.2.15软件版本 15软件发布的次数 el6.centos适合的linux平台,可能为rhel6代表Redhat6 i686适合的硬件平台，可能i386,x86_64,x64等 rpm rpm包扩展名 RPM包依赖 树形依赖：a-&gt;b-&gt;c 环形依赖：a-&gt;b-&gt;c-&gt;a 模块依赖：查询网站http://www.rpmfind.net/ 包全名和包名 包全名：操作的包是没有安装的软件包时，使用包全名，而且要注意路径 包名：操作已经安装的软件包时，使用包名，是搜索/var/lib/rpm中的数据库 RPM安装123456[root@localhost ~]# rpm -ivh h&gt; 选项：&gt; -i(install) 安装&gt; -v(verbose) 显示详细信息&gt; -h(hash) 显示进度&gt; --nodeps 不检测依赖性 升级123[root@localhost ~]# rpm -Uvh 包全名&gt; 选项&gt; -U(upgrade) 升级 卸载1234[root@localhost ~]# rpm -e 包名&gt; 选项&gt; -e(erase) 卸载&gt; --nodeps不检查依赖性 RPM包查询1234567891011121314151617181920212223242526[root@localhost ~]# rpm -q 包名# 查询包是否安装&gt; -q 查询(query)[root@localhost ~]# rpm -qa# 查询所有已经安装的RPM包&gt; -a 所有(all)[root@localhost ~]# rpm -qi 包名# 查询软件包详细信息&gt; -i 查询软件信息(information)&gt; -p 查询未安装包信息(package)[root@localhost ~]# rpm -ql 包名# 查询包中文件安装位置&gt; -l 列表(list)&gt; -p 查询未安装包信息(package)[root@localhost ~]# rpm -qf 系统文件名# 查询系统文件属于哪个RPM包&gt; -f 查询系统文件属于哪个软件包(file)[root@localhost ~]# rpm -qR 包名# 查询软件包的依赖性&gt; -R 查询软件包的依赖性(requires)&gt; -p 查询未安装包信息(package) RPM包默认安装位置 路径 释义 /etc/ 配置文件安装目录 /usr/bin/ 可执行的命令安装目录 /usr/lib/ 程序所使用的函数库保存位置 /usr/share/doc/ 基本的软件使用手册保存位置 /usr/share/man/ 帮助文件保存位置 RPM包校验123456[root@localhost ~]# rpm -V 已安装的包名# RPM包校验&gt; 选项&gt; -V 校验指定RPM包中的文件(verify)S.5....T. c /etc/httpd/conf/httpd/conf 验证内容中的8个信息的具体内容如下： S 文件大小是否改变 M 文件的类型或文件的权限(rwx)是否被改变 5 文件MD5校验和是否改变(可以看成文件内容是否改变) D 设备的主从代码是否改变 L 文件路径是否改变 U 文件的属主(所有者)是否改变 G 文件的属组是否改变 T 文件的修改时间是否改变 验证的文件类型 c 配置文件(config file) d 普通文件(documentation) g 鬼文件(ghost file), 很少见，就是该文件不应该被这个RPM包包含 L 授权文件(license file) r 描述文件(read me) RPM包中文件提取123[root@localhost ~]# rpm2cpio 包全名 | cpio -idv .文件绝对路径&gt; -rpm2cpio 将rpm包转换为cpio格式的命令&gt; -cpio 是一个标准工具，它用于创建软件档案文件和从档案文件中提取文件 cpio 12345[root@localhost ~]# cpio 选项 &lt; [文件|设备]&gt; 选项&gt; -i:copy-in模式，还原&gt; -d:还原时自动新建目录&gt; -v:显示还原过程]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>文件管理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[linux_源码包安装]]></title>
+    <url>%2F2017%2F06%2F29%2Flinux_%E6%BA%90%E7%A0%81%E5%8C%85%E5%AE%89%E8%A3%85%2F</url>
+    <content type="text"><![CDATA[Linux环境下的文件管理——源码包安装 源码包与RPM包区别RPM包安装指定安装位置rpm --help|grep prefix 虽然可以指定安装路径，但是不建议这么做 源码包安装位置安装在指定位置当中，一般是 /usr/local/软件名 区别安装之前的区别：概念上的区别安装之后的区别：安装位置不同源码包通常运行效率会更好 源码包安装过程安装前准备 安装C语言编译器 gcc 下载源码包 安装前注意事项 源代码保存位置：/usr/local/src/ 软件安装位置：/usr/local/ 如何确定安装过程报错 安装过程停止 并出现error，warning或no的提示 源码包安装过程 下载源码包 解压缩下载的源码包 进入解压缩目录 执行./configure软件配置与检查定义需要的功能选项检测系统环境是否符合安装要求把定义好的功能选项和检测系统环境的信息都写入Makefile文件,用于后续的编辑例子：./configure --prefix=/usr/local/apache2 make 编译make clean make install编译安装 安装须知查看INSTALL文件(大部分人会写在这)]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>文件管理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[DNS根服务器模拟实验]]></title>
+    <url>%2F2017%2F06%2F21%2FDNS-root_server-simulated%2F</url>
+    <content type="text"><![CDATA[DNS访问的顺序 实现DNS转发模拟实验，需要6台虚拟机 VM IP 简称 C 172.18.51.12 12 S 172.18.51.13 13 根 172.18.51.14 14 com 172.18.51.15 15 主 172.18.51.16 16 从 172.18.51.17 17 配置思路顺序：主&gt;从&gt;com&gt;根&gt;S&gt;C 实验前请妥善备份好自己的配置文件，本实验需要配置变更目录为123456/etc/named.conf/var/named/named.ca/etc/named.rfc1912.zones/var/named/root.zone /com.zone /nigaha.com.zone 实验过程中可能需要的12345检查named.conf文件语法：named-checkconf [filename]检查区域配置文件语法：named-checkzone zone [filename]dig “域名” @IP 配置前为了放置中间出现意外首先确定关闭selinux，清空iptables，安装bind 一、在14中配置12345vim /etc/named.conf注释掉 # listen-on port 53 &#123; 127.0.0.1; &#125;; # allow-query &#123; localhost; &#125;; 让域内所有服务器知道自己是根服务器123456789vim /var/named/named.ca修改 ;; QUESTION SECTION: ;. IN NS ;; ANSWER SECTION: . 518400 IN NS a.root-servers.net. a.root-servers.net. 3600000 IN A 172.18.51.14下面多余部分删掉就可以不放心可以注释掉 分发/var/named/named.ca给所有主机13、15、16、171234scp /var/named/named.ca 172.18.51.17:/var/namedAre you sure you want to continue connecting (yes/no)? yesroot@172.18.51.17&apos;s password:named.ca 100% 478 0.5KB/s 00:00 在/etc/named.rfc1912.zones中配置根123456vim /etc/named.rfc1912.zones#添加zone &quot;.&quot; IN &#123; type master; file &quot;root.zone&quot;;&#125;; 在/etc/named.conf文件中有个根的指向需要删除123456vim /etc/named.conf#删除或注释掉下面内容# zone &quot;.&quot; IN &#123;# type hint;# file &quot;named.ca&quot;;# &#125;; 然后对com进行委派1234567891011121314vim /var/named/root.zone$TTL 86400 ; 1 day@ IN SOA dns1 admin.nigaha.com. ( 1002 ; serial 86400 ; refresh (1 day) 3600 ; retry (1 hour) 604800 ; expire (1 week) 10800 ; minimum (3 hours) ) NS dns1 #dns1是本机com NS dns2 #com指向dns2dns1 A 172.18.51.14 #本机地址dns2 A 172.18.51.15 #dns2指向com的ip 重启服务，7版本和6版本不一样 15中配置先修改配置,先建立com123456vim /etc/named.rfc1912.zones#添加zone &quot;com&quot; &#123; type master; file &quot;com.zone&quot;;&#125;; 创建com的域123456789101112131415161718vim /var/named/com.zone$TTL 86400 ; 1 day@ IN SOA dns1.nigaha.com. admin.nigaha.com. ( 1002 ; serial 86400 ; refresh (1 day) 3600 ; retry (1 hour) 604800 ; expire (1 week) 10800 ; minimum (3 hours) ) NS dns1nigaha NS dns2nigaha NS dns3dns1 A 172.18.51.15dns2 A 172.18.51.16dns3 A 172.18.51.16websrv A 172.18.51.111www CNAME websrv 如果com拥有从服务器的话dns1中ip必须为本机ip，不然不影响实验效果（另外需要再加条NS记录指向从服务器也就是dns3，如果不加不影响效果，但是你要的从服务器就没卵用了）注意！！！重启服务 套路有点不对，现在配主从服务器 二、在16中配置在“options”的段里1234vim /etc/named.conf注释掉 # listen-on port 53 &#123; 127.0.0.1; &#125;; # allow-query &#123; localhost; &#125;; 配置域1234567#添加vim /etc/named.rfc1912.zoneszone &quot;nigaha.com&quot; &#123; type master; file &quot;nigaha.com.zone&quot;;// allow-transfer &#123; any;&#125;; #这个可以忽略&#125;; 创建区域数据文件1234567891011121314151617vim /var/named/nigaha.com.zone$TTL 86400 ; 1 day@ IN SOA dns1.nigaha.com. admin.nigaha.com. ( 1002 ; serial 86400 ; refresh (1 day) 3600 ; retry (1 hour) 604800 ; expire (1 week) 10800 ; minimum (3 hours) ) NS dns1.nigaha.com. NS dns2.nigaha.com.dns1 A 172.18.51.14dns2 A 172.18.51.17websrv A 172.18.51.14www CNAME websrv 三、在17中配置在“options”的段里1234vim /etc/named.conf注释掉 # listen-on port 53 &#123; 127.0.0.1; &#125;; # allow-query &#123; localhost; &#125;; 配置域123456#添加zone &quot;nigaha.com&quot; &#123; type slave; masters &#123;172.18.51.16; &#125;; file &quot;slaves/nigaha.com.slaves.zone&quot;;&#125;; 看看有木有域数据文件呀12cd /var/named/slaves;lsnigaha.com.slaves.zone 四、在13中配置先确定下根在不在12345678vim /var/named/named.ca;; QUESTION SECTION:;. IN NS;; ANSWER SECTION:. 518400 IN NS a.root-servers.net.a.root-servers.net. 3600000 IN A 172.18.51.14 #对的就是他！ 查看配置文件/ect/named.conf1234vim /etc/named.conf注释掉 # listen-on port 53 &#123; 127.0.0.1; &#125;; # allow-query &#123; localhost; &#125;; 重启服务！重启服务！重启服务！ 五、在12号验证123456789101112131415161718192021222324252627dig www.nigaha.com @172.18.51.13; &lt;&lt;&gt;&gt; DiG 9.8.2rc1-RedHat-9.8.2-0.62.rc1.el6 &lt;&lt;&gt;&gt; www.nigaha.com @172.18.51.13;; global options: +cmd;; Got answer:;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 59258;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 2, ADDITIONAL: 2;; QUESTION SECTION:;www.nigaha.com. IN A;; ANSWER SECTION:www.nigaha.com. 86400 IN CNAME websrv.nigaha.com.websrv.nigaha.com. 86400 IN A 172.18.51.14;; AUTHORITY SECTION:nigaha.com. 86400 IN NS dns1.nigaha.com.nigaha.com. 86400 IN NS dns2.nigaha.com.;; ADDITIONAL SECTION:dns2.nigaha.com. 86400 IN A 172.18.51.17dns1.nigaha.com. 86400 IN A 172.18.51.14;; Query time: 11 msec;; SERVER: 172.18.51.13#53(172.18.51.13);; WHEN: Mon Sep 25 10:52:43 2017;; MSG SIZE rcvd: 139 成功！]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>DNS</tag>
+        <tag>服务servers</tag>
+        <tag>实验</tag>
+      </tags>
+  </entry>
+</search>
