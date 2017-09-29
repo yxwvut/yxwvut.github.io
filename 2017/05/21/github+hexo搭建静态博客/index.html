@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> github+hexo搭建静态博客 · 言在语中 </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="言在语中">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+<meta name="keywords" content="nlvi, Nlvi" />
+
+
+
+
+
+    <meta name="keywords" content="DNS, github, hexo, Nlvi" />
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "言在语中",
+        author: "nigaha",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud-mask"></div>  
+<div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/DNS/" style="font-size: 14px;">DNS</a> <a href="/tags/RAID/" style="font-size: 14px;">RAID</a> <a href="/tags/github/" style="font-size: 14px;">github</a> <a href="/tags/hexo/" style="font-size: 14px;">hexo</a> <a href="/tags/linux/" style="font-size: 14px;">linux</a> <a href="/tags/实验/" style="font-size: 14px;">实验</a> <a href="/tags/文件管理/" style="font-size: 14px;">文件管理</a> <a href="/tags/服务servers/" style="font-size: 14px;">服务servers</a> <a href="/tags/理论/" style="font-size: 14px;">理论</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">言在语中</a></span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="javascript:;" id="search">
+                <span>搜索</span>
+                
+                    <span class="menu-item-label">search</span>
+                
+            </a>
+        </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+</header>
+<div class="mobile-header">
+    <div class="mobile-header-body">
+        <div class="mobile-header-list">
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/">
+                        <span>文章</span>
+                        
+                            <span class="menu-item-label">article</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/archives">
+                        <span>归档</span>
+                        
+                            <span class="menu-item-label">archives</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item inner-cloud">
+                    <div class="mobile-nav-tag">
+                        <a href="javascript:;" id="mobile-tags">
+                            <span>标签</span>
+                            
+                                <span class="menu-item-label">tags</span>
+                            
+                        </a>
+                    </div>
+                    <div class="mobile-nav-tagcloud">
+                        <div class="mobile-tagcloud-inner">
+                            <a href="/tags/DNS/" style="font-size: 14px;">DNS</a> <a href="/tags/RAID/" style="font-size: 14px;">RAID</a> <a href="/tags/github/" style="font-size: 14px;">github</a> <a href="/tags/hexo/" style="font-size: 14px;">hexo</a> <a href="/tags/linux/" style="font-size: 14px;">linux</a> <a href="/tags/实验/" style="font-size: 14px;">实验</a> <a href="/tags/文件管理/" style="font-size: 14px;">文件管理</a> <a href="/tags/服务servers/" style="font-size: 14px;">服务servers</a> <a href="/tags/理论/" style="font-size: 14px;">理论</a>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/about">
+                        <span>关于</span>
+                        
+                            <span class="menu-item-label">about</span>
+                        
+                    </a>
+                </div>
+            
+            
+        </div>
+    </div>
+    <div class="mobile-header-nav">
+        <div class="mobile-header-item" id="mobile-left">
+            <div class="header-menu-item">
+                <span class="header-menu-line"></span>
+            </div>
+        </div>
+        <h1 class="mobile-header-title">
+            <a href="/">言在语中</a>
+        </h1>
+        <div class="mobile-header-item"></div>
+    </div>
+</div>
+
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年5月21日</span>
+                
+                
+                    <span class="post-category"><a href="/categories/github/">github</a></span>
+                
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                github+hexo搭建静态博客
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/DNS/">DNS</a>
+                    
+                        <a href="/tags/github/">github</a>
+                    
+                        <a href="/tags/hexo/">hexo</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <h3 id="hexo从开始到搭建成功"><a href="#hexo从开始到搭建成功" class="headerlink" title="hexo从开始到搭建成功"></a>hexo从开始到搭建成功</h3><a id="more"></a>
+<p>本篇所包含的内容如下：</p>
+<ol>
+<li>安装Git Bash</li>
+<li>安装NodeJs</li>
+<li>安装hexo</li>
+<li>生成SSH并添加到github</li>
+<li>部署项目</li>
+<li>上传到github</li>
+<li>绑定个人域名</li>
+<li>修改及配置主题</li>
+<li>添加RSS</li>
+<li>添加评论</li>
+<li>写文章部分</li>
+</ol>
+<h4 id="1-安装Git-Bash"><a href="#1-安装Git-Bash" class="headerlink" title="1. 安装Git Bash"></a>1. <strong>安装Git Bash</strong></h4><p>首先准备好<a href="https://git-for-windows.github.io/" target="_blank" rel="external">Git Bash</a>, 我的是windows环境，所以下载windows版本并安装就可以了。</p>
+<ul>
+<li><a href="https://git-for-windows.github.io/" target="_blank" rel="external">下载地址</a></li>
+<li>安装步骤：双击下载好的exe文件，一路next就好啦</li>
+<li>安装好后，打开gitbash，查看版本：<ul>
+<li>命令：<code>git version</code> </li>
+</ul>
+</li>
+</ul>
+<h4 id="2-安装NodeJs"><a href="#2-安装NodeJs" class="headerlink" title="2. 安装NodeJs"></a>2. <strong>安装NodeJs</strong></h4><p>Hexo是基于nodeJS环境的静态博客，里面的npm工具很有用。</p>
+<ul>
+<li><p><a href="https://nodejs.org/en/" target="_blank" rel="external">下载地址</a>(说明：LTS为长期支持版，Current为当前最新版)</p>
+</li>
+<li><p>安装步骤：下载好msi文件后，双击打开安装，也是一路next，不过在Custom Setup这一步记得选 <code>Add to PATH</code> ,这样你就不用自己去配置电脑上环境变量了，装完在按 <code>win + r</code> 快捷键调出运行，然后输入cmd确定，在cmd中输入path可以看到你的node是否配置在里面（环境变量）</p>
+</li>
+<li><p>查看版本：</p>
+<ul>
+<li>命令：<code>node -v</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="3-安装hexo"><a href="#3-安装hexo" class="headerlink" title="3. 安装hexo"></a>3. <strong>安装hexo</strong></h4><p>gitbash中用npm工具安装。</p>
+<ul>
+<li>先创建一个文件夹（用来存放所有blog的东西），然后<code>cd</code>到该文件夹下。</li>
+<li>安装hexo命令：npm i -g hexo</li>
+<li>安装完成后，查看版本：<ul>
+<li>命令：<code>hexo -v</code></li>
+</ul>
+</li>
+<li>初始化命令：<code>hexo init</code> 在你的目录会出现(master)</li>
+<li><p>解释一下目录中文件作用：</p>
+<ul>
+<li>node_modules：是依赖包</li>
+<li>public：存放的是生成的页面</li>
+<li>scaffolds：命令生成文章等的模板</li>
+<li>source：用命令创建的各种文章</li>
+<li>themes：主题</li>
+<li>_config.yml：整个博客的配置</li>
+<li>db.json：source解析所得到的</li>
+<li>package.json：项目所需模块项目的配置信息</li>
+</ul>
+</li>
+<li>主要在_config.yml目录中进行配置，其他的目录不需要做太大改动。</li>
+</ul>
+<h4 id="4-搭桥到github"><a href="#4-搭桥到github" class="headerlink" title="4. 搭桥到github"></a>4. <strong>搭桥到github</strong></h4><p>​    <a href="https://github.com/" target="_blank" rel="external">github</a>网址</p>
+<ul>
+<li><p>没账号的创建账号，有账号的看下面。</p>
+<ol>
+<li><p>创建一个repo，名称为<code>yourname.github.io</code>, 其中yourname是你的github名称。</p>
+</li>
+<li><p>回到gitbash中，配置github账户信息</p>
+</li>
+<li><p>创建SSH密钥<br>在gitbash中输入：<code>ssh-keygen -t rsa -C &quot;youremail@example.com</code>，生成ssh。找到<code>id_rsa.pub</code>文件的内容。（记住密码，生成的密钥一般都在本地C盘user目录中）</p>
+</li>
+<li><p>将上面获取的ssh放到github中：<br>添加一个 <code>New SSH key</code> ，key就填刚刚那一段。</p>
+</li>
+<li><p>在gitbash中验证是否添加成功：<code>ssh -T git@github.com</code>（可以不做）</p>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="5-配置主目录"><a href="#5-配置主目录" class="headerlink" title="5. 配置主目录"></a>5. <strong>配置主目录</strong></h4><ul>
+<li>用编辑器打开你的blog项目，修改<code>_config.yml</code>文件的一些配置(冒号之后都是有一个半角空格的)：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: https://github.com/YourgithubName/YourgithubName.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
+<ul>
+<li><p>回到gitbash中，进入你的blog目录，分别执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo clean</div><div class="line">hexo generate</div><div class="line">hexo server</div></pre></td></tr></table></figure>
+<p>注：hexo 3.0把服务器独立成个别模块，需要单独安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm i hexo-server</div></pre></td></tr></table></figure>
+</li>
+<li><p>打开浏览器输入：<code>http://localhost:4000</code></p>
+</li>
+</ul>
+<h4 id="6-上传到github"><a href="#6-上传到github" class="headerlink" title="6. 上传到github"></a>6. <strong>上传到github</strong></h4><ul>
+<li><p>先安装一波：<code>npm install hexo-deployer-git --save</code>（这样才能将你写好的文章部署到github服务器上并让别人浏览到）</p>
+</li>
+<li><p>执行命令(建议每次都按照如下步骤部署)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo clean</div><div class="line">hexo generate</div><div class="line">hexo deploy</div></pre></td></tr></table></figure>
+<p>注意deploy的过程中要输入你的username及passward。如下：</p>
+<p>​提示： <code>INFO  Deploy done: git</code>信息部署完成</p>
+</li>
+<li><p>在浏览器中输入<code>http://yourgithubname.github.io</code></p>
+</li>
+<li><p>如果再次推送的话<code>hexo s</code>本地测试无误后，使用<code>hexo deploy</code>就可以</p>
+</li>
+</ul>
+<h4 id="7-绑定个人域名可选"><a href="#7-绑定个人域名可选" class="headerlink" title="7. 绑定个人域名可选"></a>7. <strong>绑定个人域名可选</strong></h4><ul>
+<li>第一步购买域名：<a href="https://wanwang.aliyun.com" target="_blank" rel="external">阿里云</a>、<a href="https://cloud.tencent.com" target="_blank" rel="external">腾讯云</a>。DNS顺便弄了</li>
+<li>第二步添加CNAME：在项目的source文件夹下新建一个名为CNAME的文件，在里面添加你购买的域名，比如我添加的是<code>nigaha.com</code>。</li>
+<li>到DNS中添加记录：<br>其中ip地址为你的github的地址，可在cmd中ping一下就能看到(<code>ping yourname.github.io</code>)：</li>
+</ul>
+<h4 id="8-修改及配置主题"><a href="#8-修改及配置主题" class="headerlink" title="8. 修改及配置主题"></a>8. <strong>修改及配置主题</strong></h4><ul>
+<li>hexo初始化之后默认的主题是<code>landscape</code> , 想更换其他主题请点击<a href="https://hexo.io/themes/" target="_blank" rel="external">更多hexo主题地址</a>。在<code>Search</code>中搜索你要的主题名称。</li>
+</ul>
+<ul>
+<li>跟该主题相关的配置在<code>themes/hueman/_config.yml</code></li>
+</ul>
+<p>  在导航栏添加点东西</p>
+<ul>
+<li>例如添加了一个更新日志的模块。</li>
+<li><p>在主题的配置文件中，menu添加一栏：<code>Board: /board</code>。</p>
+<ul>
+<li>然后在source中添加一个board，即对应上面的名字。然后再创建一个index.md，里面可以写你想写的内容。</li>
+<li>在主题的<code>hueman/langulages/zh-CN.yml</code>中的index适当的位置加：<code>board: &#39;更新日志&#39;</code>，位置和名字是你自己设定。</li>
+<li>重新部署，然后就OK了</li>
+</ul>
+<p>在侧边栏添加点东西</p>
+<ul>
+<li><p>回到你的主题的配置文件中，找到<code>widgets</code>一栏，在你要添加的位置处添加一条你自定义的名称。例如我的叫<code>communiation</code>且放在了第二行。</p>
+</li>
+<li><p>在上面所提到的<code>zh-CN.yml</code>文件中找到sidebar一栏，添加<code>communiation: &#39;你要设的名称&#39;</code>。</p>
+</li>
+<li><p>在<code>hueman/layout/widget</code>中添加一个<code>communiation.ejs</code>,填入模板</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;% if (site.posts.length) &#123; %&gt;</div><div class="line">&lt;div class=&quot;widget-wrap widget-list&quot;&gt;</div><div class="line">    &lt;h3 class=&quot;widget-title&quot;&gt;&lt;%= __(&apos;sidebar.communiation&apos;) %&gt;&lt;/h3&gt;</div><div class="line">    &lt;div class=&quot;widget&quot;&gt;</div><div class="line">        &lt;!--这里添加你要写的内容--&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;% &#125; %&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="9-添加RSS"><a href="#9-添加RSS" class="headerlink" title="9. 添加RSS"></a>9. <strong>添加RSS</strong></h4><ul>
+<li><p>先安装rss相关插件：<code>npm i hexo-generator-feed</code></p>
+</li>
+<li><p>在你的项目的<code>_config.yml</code>配置文件下找到Extensions添加如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># Extensions  #插件和主题</div><div class="line">## Plugins: https://hexo.io/plugins/</div><div class="line">## Themes: https://hexo.io/themes/</div><div class="line">#RSS订阅</div><div class="line">plugin:</div><div class="line">- hexo-generator-feed</div><div class="line">#Feed Atom</div><div class="line">feed:</div><div class="line">  type: atom</div><div class="line">  path: atom.xml</div><div class="line">  limit: 20</div></pre></td></tr></table></figure>
+</li>
+<li><p>进入到你的主题的配置文件下，找到你的放rss的位置，添加<code>/atom.xml</code>即可。</p>
+</li>
+<li><p>重新部署再打开就能看到效果啦~</p>
+</li>
+</ul>
+<h4 id="10-添加评论"><a href="#10-添加评论" class="headerlink" title="10. 添加评论"></a>10. <strong>添加评论</strong></h4><p><strong>20170812更新：</strong><br>云更贴已在2017年8月1日停止服务，具体评论系统文章统计站长统计及百度SEO谷歌SEO什么的可参考<a href="http://visugar.com/2017/08/01/20170801HexoPlugins/" target="_blank" rel="external">Hexo博客添加SEO-评论系统-阅读统计-站长统计</a><br>-—-<br>此段已失效。</p>
+<ul>
+<li>先选一个你要使用的第三方评论系统。</li>
+<li>在主题的配置文件下找到comment，添加一行，例如我添加的是<code>yungentie: 此处自由发挥</code></li>
+<li><p>注册完评论系统后获取相应的代码，然后在主题的layout下找到comment新建一个ejs模板文件，名称自定义。</p>
+</li>
+<li><p>找到你的article.ejs模板文件，加上<code>&lt;%- partial(&#39;comment/你刚刚取得名字&#39;) %&gt;</code>保存。</p>
+</li>
+<li>重新部署，OK啦</li>
+</ul>
+<h4 id="11-文章部分"><a href="#11-文章部分" class="headerlink" title="11. 文章部分"></a>11. <strong>文章部分</strong></h4><ul>
+<li>新建文章：<code>hexo new &#39;文章名&#39;</code>，然后你就可以在<code>source/_posts</code>路径下看到你创建的文章啦，编辑完成之后按照前面说的方式部署，在浏览器刷新就能看到你的文章了。</li>
+<li>关于具体的文章编辑你可以看下<a href="https://hexo.io/zh-cn/docs/writing.html" target="_blank" rel="external">官网的介绍</a></li>
+<li>markdown很容易上手</li>
+</ul>
+
+            
+        
+        </div>
+        
+            
+            
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2017/06/21/DNS-root_server-simulated/" id="art-left" class="art-right">
+                <span class="next-title">
+                    DNS根服务器模拟实验<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2016 ~ 2017</span>
+        <span>❤</span>
+        <span>nigaha</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="http://nigaha.com"> 眼一睁 </a>
+        </span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+<script src="/script/search.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.mobileHeader();
+    Nlvi.back2top();
+    Nlvi.smoothScroll();
+    Nlvi.onView();
+    Nlvi.showToc();
+    Nlvi.showComments();
+    Nlvi.showReward();
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    
+        
+    
+    <div class="backtop syuanpi dead toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+    
+    <div class="search" id="search">
+        <div class="mask" id="mask"></div>
+        <div class="search-wrapper syuanpi">
+            <h1 id="search-header" class="syuanpi">搜索一下？</h1>
+            <div class="input">
+                <input type="text" id="local-search-input" results="0" name="">
+            </div>
+            <div id="local-search-result"></div>
+        </div>
+    </div>
+    <script>
+    var GREETING = {
+        morning: "当我们探索时，就要发现到真理",
+        noon: "人的天职在于勇于探索真理。",
+        after: "一件事实是一条没有性别的真理",
+        night: "真理有时可能变得黯淡，但它永远不会熄灭",
+        midnight: "真理在人那里获得生命力，并且展现出来"
+    }
+    $(document).ready(function(){
+        Nlvi.search();
+    });
+    </script>
+
+</body>
+</html>
