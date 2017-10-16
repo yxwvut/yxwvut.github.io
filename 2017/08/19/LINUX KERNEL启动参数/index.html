@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <title>
-  
-    理论 · 言在语中
-  
-</title>
+    <title> LINUX KERNEL启动参数 · 言在语中 </title>
     <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -20,6 +16,8 @@
 
 
 
+
+    <meta name="keywords" content="linux, 理论, Nlvi" />
 
 <link rel="stylesheet" href="/style/style.css">
 <script src="/script/jquery.min.js"></script>
@@ -211,50 +209,110 @@
         <main class="main" id="main">
             
     
-    <div class="archive syuanpi riseIn-light" id="archive">
-        
-            <h2 class="archive-title"> 正在查看 </h2>
-            <span class="archive-name"> — 理论</span>
-        
-        <div class="archive-list">
-            <ul>
-        
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年8月19日</span>
                 
-                    2017-08-19
                 
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/08/19/LINUX KERNEL启动参数/">LINUX KERNEL启动参数</a>
-                </span>
-            </li>
+                    <span class="post-category"><a href="/categories/系统/">系统</a></span>
+                
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                LINUX KERNEL启动参数
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/linux/">linux</a>
+                    
+                        <a href="/tags/理论/">理论</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <h3 id="kernel在grub中配置的启动参数"><a href="#kernel在grub中配置的启动参数" class="headerlink" title="kernel在grub中配置的启动参数"></a>kernel在grub中配置的启动参数</h3><a id="more"></a>
+<p>在Linux中，给kernel传递参数以控制其行为总共有三种方法：</p>
+<pre><code>1. build kernel之时的各个configuration选项。
 
-        
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    2017-07-21
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2017/07/21/RAID(Redundant Array of Independent Disks)总结/">常用RAID技术总结</a>
-                </span>
-            </li>
+2. 当kernel启动之时，可以参数在kernel被GRUB或LILO等启动程序调用之时传递给kernel。
 
+3.在kernel运行时，修改/proc或/sys目录下的文件。
+</code></pre><p>这里讲的就是第二种方式了，kernel在grub中配置的启动参数。</p>
+<p>首先，kernel有哪些参数呢？ 在linux的源代码中，有这样的一个文档<strong>Documentation/kernel-parameters.txt</strong> ，它介绍了kernel的各个参数及其意义。</p>
+<p>其次，<strong>kernel启动参数以空格分隔，而且是严格区分大小写的</strong><br>    例如：mem和MEM是不一样的</p>
+<p>再次，对于<strong>module特有的kernel参数写法</strong>是这样的，<strong>[module name].[parameter=XX]</strong>，<br>    例如，igb.max_vfs=7<br>    这个kernel启动参数的效果就是相当于这样来动态加载module: modprobe igb max_vfs=7</p>
+<p>另外，kernel是怎样处理这些启动参数的呢？<br>     启动参数通常是这样的形式：<br>         name[=value_1][,value_2]…[,value_10]</p>
+<p>“name”是关键字，内核用它来识别应该把”关键字”后面的值传递给谁，也就是如何处理这个值，是传递给处理进程还是作为环境变量或者抛给”init”。<br>    值的个数限制为10，你可以通过再次使用该关键字使用超过10个的参数。 </p>
+<p>kernel检查关键字是不是 ‘root=’, ‘nfsroot=’, ‘nfsaddrs=’, ‘ro’, ‘rw’, ‘debug’ 或 ‘init’ </p>
+<p>内核在bootsetups数组里搜索于该关键字相关联的已注册的处理函数，如果找到相关的已注册的处理函数，则调用这些函数并把关键字后面的值作为参数传递给这些函数。<br>    比如，你在启动时设置参数 name＝a、b、c、d，内核搜索 bootsetups 数组，如果发现”name”已注册，则调用”name”的设置函数如 name_setup()，并把 a、b、c、d 传递给 name_setup() 执行。 </p>
+<p>所有型如”name＝value”参数，如果没有被上面所述的设置函数接收，将被解释为系统启动后的环境变量<br>    比如”TERM=vt100”启动参数就会被作为一个启动后的环境变量。</p>
+<p>所有没有被内核设置函数接收也没又被设置成环境变量的参数都将留给init进程处理<br>    比如”single”</p>
+<p>下面简单总结一些常用到的一些kernel启动参数。</p>
+<p><strong>根磁盘相关启动参数：</strong></p>
+<p>root  # 指出启动的根文件系统 如：root=/dev/sda1</p>
+<p>ro  # 指定根设备在启动过程中为read-only，默认情况下一般都是这样配的</p>
+<p>rw  # 和ro类似，它是规定为read-write，可写</p>
+<p>rootfstype # 根文件系统类型，如：rootfstype=ext4</p>
+<p><strong>Console和kernel log相关启动参数：</strong></p>
+<p>console # console的设备和选项，如：console=tty0 console=ttyS0</p>
+<p>debug # enable kernel debugging 启动中的所有debug信息都会打印到console上</p>
+<p>quiet # disable all log messages 将kernel log level设置为KERN_WARNING，在启动中只非常严重的信息</p>
+<p>loglevel # 设置默认的console日志级别，如：loglevel=7 （0~7的数字分别为：KERN_EMERG,..,KERN_DEBUG）</p>
+<p>time # 设置在每条kernel log信息前加一个时间戳</p>
+<p><strong>内存相关的启动参数：</strong></p>
+<p>mem # 指定kernel使用的内存量，mem=n[KMG]</p>
+<p>hugepages # 设置大页表页（4MB大小）的最多个数，hugepages=n</p>
+<p><strong>CPU相关的启动参数：</strong></p>
+<p>mce # Enable the machine check exception feature.</p>
+<p>nosmp # Run as a single-processor machine. 不使用SMP（多处理器）</p>
+<p>max_cpus # max_cpus=n, SMP系统最多能使用的CPU个数（即使系统中有大于n个的CPU）</p>
+<p><strong>Ramdisk相关的启动参数：</strong></p>
+<p>initrd # 指定初始化ramdisk的位置，initrd=filename</p>
+<p>noinitrd # 不使用initrd的配置，即使配置了initrd参数</p>
+<p><strong>初始化相关启动参数：</strong></p>
+<p>init # 在启动时去执行的程序，init=filename，默认值为/sbin/init</p>
+<p><strong>PCI相关的启动参数：</strong></p>
+<p>pci # pci相关的选项，我常使用pci=assign_buses，也使用过pci=nomsi</p>
+<p><strong>SELinux相关启动参数：</strong></p>
+<p>enforcing # SELinux enforcing状态的开关，enforcing=0表示仅仅是记录危险而不是阻止访问，enforcing=1完全enable，默认值是0</p>
+<p>selinux # 在启动时关闭或开启SELinux，selinux=0表示关闭，selinux=1表示开启selinux</p>
+<p>另外，还是用max_loop来指定最多可使用的回路设备。</p>
+<p>在Redhat的系统中，还有个经常看到的kernel启动参数——rhgb，rhgb表示redhat graphics boot，就是会看到图片来代替启动过程中显示的文本信息，这些信息在启动后用dmesg也可以看到<br>rhgb = redhat graphical boot – This is a GUI mode booting screen with most of the information hidden while the user sees a rotating activity icon spining and brief information as to what the computer is doing.</p>
+<p>quiet = hides the majority of boot messages before rhgb starts. These are supposed to make the common user more comfortable. They get alarmed about seeing the kernel and initializing messages, so they hide them for their comfort.</p>
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料:"></a>参考资料:</h4><p>linux kernel documents</p>
+<p>《Linux kernel in a nutshell》</p>
+
+            
         
-            </ul>
         </div>
-    </div>
+        
+            
+            
+        
+    </article>
     
-    <nav class="pagination">
-        <span class="page-number current">1</span>
+        
+    <nav class="article-page">
+        
+        
+            <a href="/2017/07/21/RAID(Redundant Array of Independent Disks)总结/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>常用RAID技术总结
+                </span>
+            </a>
+        
     </nav>
 
+        
+    
 
 
         </main>
@@ -321,6 +379,8 @@ $(document).ready(function(){
 })
 </script>
     </div>
+    
+        
     
     <div class="backtop syuanpi dead toTop" id="backtop">
     <i class="iconfont icon-up"></i>
