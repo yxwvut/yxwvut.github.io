@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> Cobbler服务自动化安装部署系统 · 言在语中 </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="言在语中">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+<meta name="keywords" content="nlvi, Nlvi" />
+
+
+
+
+
+    <meta name="keywords" content="自动化安装系统, cobbler, DHCP, Kickstart应答文件, Nlvi" />
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "言在语中",
+        author: "nigaha",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud-mask"></div>  
+<div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/DHCP/" style="font-size: 14px;">DHCP</a> <a href="/tags/DNS/" style="font-size: 14px;">DNS</a> <a href="/tags/Kickstart应答文件/" style="font-size: 14px;">Kickstart应答文件</a> <a href="/tags/RAID/" style="font-size: 14px;">RAID</a> <a href="/tags/cobbler/" style="font-size: 14px;">cobbler</a> <a href="/tags/github/" style="font-size: 14px;">github</a> <a href="/tags/hexo/" style="font-size: 14px;">hexo</a> <a href="/tags/linux/" style="font-size: 14px;">linux</a> <a href="/tags/实验/" style="font-size: 14px;">实验</a> <a href="/tags/文件管理/" style="font-size: 14px;">文件管理</a> <a href="/tags/服务servers/" style="font-size: 14px;">服务servers</a> <a href="/tags/理论/" style="font-size: 14px;">理论</a> <a href="/tags/自动化安装系统/" style="font-size: 14px;">自动化安装系统</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">言在语中</a></span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="javascript:;" id="search">
+                <span>搜索</span>
+                
+                    <span class="menu-item-label">search</span>
+                
+            </a>
+        </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+</header>
+<div class="mobile-header">
+    <div class="mobile-header-body">
+        <div class="mobile-header-list">
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/">
+                        <span>文章</span>
+                        
+                            <span class="menu-item-label">article</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/archives">
+                        <span>归档</span>
+                        
+                            <span class="menu-item-label">archives</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item inner-cloud">
+                    <div class="mobile-nav-tag">
+                        <a href="javascript:;" id="mobile-tags">
+                            <span>标签</span>
+                            
+                                <span class="menu-item-label">tags</span>
+                            
+                        </a>
+                    </div>
+                    <div class="mobile-nav-tagcloud">
+                        <div class="mobile-tagcloud-inner">
+                            <a href="/tags/DHCP/" style="font-size: 14px;">DHCP</a> <a href="/tags/DNS/" style="font-size: 14px;">DNS</a> <a href="/tags/Kickstart应答文件/" style="font-size: 14px;">Kickstart应答文件</a> <a href="/tags/RAID/" style="font-size: 14px;">RAID</a> <a href="/tags/cobbler/" style="font-size: 14px;">cobbler</a> <a href="/tags/github/" style="font-size: 14px;">github</a> <a href="/tags/hexo/" style="font-size: 14px;">hexo</a> <a href="/tags/linux/" style="font-size: 14px;">linux</a> <a href="/tags/实验/" style="font-size: 14px;">实验</a> <a href="/tags/文件管理/" style="font-size: 14px;">文件管理</a> <a href="/tags/服务servers/" style="font-size: 14px;">服务servers</a> <a href="/tags/理论/" style="font-size: 14px;">理论</a> <a href="/tags/自动化安装系统/" style="font-size: 14px;">自动化安装系统</a>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/about">
+                        <span>关于</span>
+                        
+                            <span class="menu-item-label">about</span>
+                        
+                    </a>
+                </div>
+            
+            
+        </div>
+    </div>
+    <div class="mobile-header-nav">
+        <div class="mobile-header-item" id="mobile-left">
+            <div class="header-menu-item">
+                <span class="header-menu-line"></span>
+            </div>
+        </div>
+        <h1 class="mobile-header-title">
+            <a href="/">言在语中</a>
+        </h1>
+        <div class="mobile-header-item"></div>
+    </div>
+</div>
+
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年10月27日</span>
+                
+                
+                    <span class="post-category"><a href="/categories/cobbler/">cobbler</a></span>
+                
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                Cobbler服务自动化安装部署系统
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/自动化安装系统/">自动化安装系统</a>
+                    
+                        <a href="/tags/cobbler/">cobbler</a>
+                    
+                        <a href="/tags/DHCP/">DHCP</a>
+                    
+                        <a href="/tags/Kickstart应答文件/">Kickstart应答文件</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <h3 id="Cobbler将DHCP、TFTP、DNS、HTTP等服务进行集成，实现自动化安装部署"><a href="#Cobbler将DHCP、TFTP、DNS、HTTP等服务进行集成，实现自动化安装部署" class="headerlink" title="Cobbler将DHCP、TFTP、DNS、HTTP等服务进行集成，实现自动化安装部署"></a>Cobbler将DHCP、TFTP、DNS、HTTP等服务进行集成，实现自动化安装部署</h3><a id="more"></a>
+<ul>
+<li>cobbler 服务集成<ul>
+<li>PXE</li>
+<li>DHCP</li>
+<li>rsync</li>
+<li>HTTP</li>
+<li>DNS</li>
+<li>Kickstart</li>
+<li>IPMI 电源管理</li>
+</ul>
+</li>
+</ul>
+<h4 id="安装前准备（注意）"><a href="#安装前准备（注意）" class="headerlink" title="安装前准备（注意）"></a>安装前准备（注意）</h4><pre><code>磁盘空间：单镜像大于10G
+内存空间：目标设备内存大于1G
+yum源配置
+准备镜像文件
+selinux
+iptables
+firewalld
+查看版本和内核信息（习惯）
+查看本机网卡信息
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@cobbler ~]# uname -a</div><div class="line">Linux cobbler 3.10.0-693.el7.x86_64 #1 SMP Tue Aug 22 21:09:27 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux</div><div class="line">[root@cobbler ~]# cat /etc/redhat-release</div><div class="line">CentOS Linux release 7.4.1708 (Core)</div></pre></td></tr></table></figure>
+<p>####安装cobbler<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install cobbler -y</div></pre></td></tr></table></figure></p>
+<p>cobbler命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@cobbler ~]# cobbler --help</div><div class="line">usage</div><div class="line">=====</div><div class="line">cobbler &lt;distro|profile|system|repo|image|mgmtclass|package|file&gt; ...</div><div class="line">        [add|edit|copy|getks*|list|remove|rename|report] [options|--help]</div><div class="line">cobbler     	&lt;aclsetup|buildiso|import|list|replicate|report|reposync|sync|validateks|version|signature|get-loaders|hardlink&gt; [options|--help]</div></pre></td></tr></table></figure></p>
+<p>显示套件的文件列表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rpm -ql cobbler | grep service</div><div class="line">rpm -qf cobbler</div></pre></td></tr></table></figure></p>
+<p>查看端口状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ss -nul</div></pre></td></tr></table></figure></p>
+<p>查看文件信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@cobbler tftpboot]# ls /var/lib/tftpboot/</div><div class="line">boot  etc  grub  images  images2  memdisk  menu.c32  ppc  pxelinux.0  pxelinux.cfg  s390x  yaboot</div></pre></td></tr></table></figure></p>
+<p>相关服务重启并加入开机启动项<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">systemctl enable cobblerd.service</div><div class="line">systemctl start cobblerd</div><div class="line">systemctl enable tftp</div><div class="line">systemctl start tftp</div><div class="line">systemctl enable httpd</div><div class="line">systemctl start httpd</div></pre></td></tr></table></figure></p>
+<p>效验配置cobber<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">[root@cobbler ~]# cobbler check</div><div class="line"></div><div class="line">The following are potential configuration items that you may want to fix:</div><div class="line"></div><div class="line">1 : The &apos;server&apos; field in /etc/cobbler/settings must be set to something other than localhost, or kickstarting features will not work.  This should be a resolvable hostname or IP for the boot server as reachable by all machines that will use it.</div><div class="line">		# server：域问题</div><div class="line">2 : For PXE to be functional, the &apos;next_server&apos; field in /etc/cobbler/settings must be set to something other than 127.0.0.1, and should match the IP of the boot server on the PXE network.</div><div class="line">		# next_server：tftp服务问题</div><div class="line">3 : change &apos;disable&apos; to &apos;no&apos; in /etc/xinetd.d/tftp</div><div class="line">		# 非独立服务问题：第一项解决同时解决</div><div class="line">4 : some network boot-loaders are missing from /var/lib/cobbler/loaders, you may run &apos;cobbler get-loaders&apos; to download them, or, if you only want to handle x86/x86_64 netbooting, you may ensure that you have installed a *recent* version of the syslinux package installed and can ignore this message entirely.  Files in this directory, should you want to support all architectures, should include pxelinux.0, menu.c32, elilo.efi, and yaboot. The &apos;cobbler get-loaders&apos; command is the easiest way to resolve these requirements.</div><div class="line">		# boot-loaders丢失文件：要求链接互联网，运行cobbler get-loaders。没有网络情况拷贝内核文件 cp /var/lib/tftpboot/&#123;menu.c32,pxelinux.0&#125;	/var/lib/cobbler/loaders</div><div class="line">5 : enable and start rsyncd.service with systemctl</div><div class="line">		# rsync：同步问题可以忽略</div><div class="line">6 : debmirror package is not installed, it will be required to manage debian deployments and repositories</div><div class="line">		# debmirror包未安装：debian系统，现在使用的是centos，忽略</div><div class="line">7 : ksvalidator was not found, install pykickstart</div><div class="line">		# 未找到pykickstart</div><div class="line">8 : The default password used by the sample templates for newly installed machines (default_password_crypted in /etc/cobbler/settings) is still set to &apos;cobbler&apos; and should be changed,try: &quot;openssl passwd -1 -salt &apos;random-phrase-here&apos; &apos;your-password-here&apos;&quot; to generate new one</div><div class="line">		# 默认口令问题</div><div class="line">9 : fencing tools were not found, and are required to use the (optional) power management features. install cman or fence-agents to use them</div><div class="line">		# fencing集群相关可以忽略</div><div class="line">Restart cobblerd and then run &apos;cobbler sync&apos; to apply changes.</div></pre></td></tr></table></figure></p>
+<p>解决方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">vim /etc/cobbler/settings</div><div class="line">修改384行</div><div class="line">server： 192.168.1.51</div><div class="line"></div><div class="line">修改272行</div><div class="line">next_server: 192.168.1.51</div><div class="line"></div><div class="line">修改101行:&quot;$1$mF86/UHC$WvcIcX2t6crBz2onWxyac.&quot;为MD5文件生成先制作密码，另开启终端制作亦可。</div><div class="line">openssl passwd -1</div><div class="line">	Password:</div><div class="line">	Verifying - Password:</div><div class="line">	$1$4i6hacNZ$0.QlS0Z4w6oat8c.wJxCy0</div><div class="line">记住密码，替换为</div><div class="line">default_password_crypted: &quot;$1$4i6hacNZ$0.QlS0Z4w6oat8c.wJxCy0&quot;</div></pre></td></tr></table></figure></p>
+<p>注：解决过程中每次都需要重新验证并重启服务，也可以一起排查再重启服务,同时有些服务可能已经解决还会报错，可以忽略。命令如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cobbler check</div><div class="line">systemctl restart cobblerd</div><div class="line">cobbler sync</div></pre></td></tr></table></figure></p>
+<p>当上述配置无问题可以进行下一环节DHCP配置</p>
+<p>出现错误补充：<br>效验过程中可能出现另一种报错，该报错信息并非上面提示，一般不会cobbler问题而是软件包依赖或者其他问题那么需要逐个排查后再进行效验配置。报错信息例如下面提示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">[root@cobbler ~]# cobbler check</div><div class="line">httpd does not appear to be running and proxying cobbler, or SELinux is in the way. Original traceback:</div><div class="line">Traceback (most recent call last):</div><div class="line">  File &quot;/usr/lib/python2.7/site-packages/cobbler/cli.py&quot;, line 251, in check_setup</div><div class="line">    s.ping()</div><div class="line">  File &quot;/usr/lib64/python2.7/xmlrpclib.py&quot;, line 1233, in __call__</div><div class="line">    return self.__send(self.__name, args)</div><div class="line">  File &quot;/usr/lib64/python2.7/xmlrpclib.py&quot;, line 1587, in __request</div><div class="line">    verbose=self.__verbose</div><div class="line">  File &quot;/usr/lib64/python2.7/xmlrpclib.py&quot;, line 1273, in request</div><div class="line">    return self.single_request(host, handler, request_body, verbose)</div><div class="line">  File &quot;/usr/lib64/python2.7/xmlrpclib.py&quot;, line 1301, in single_request</div><div class="line">    self.send_content(h, request_body)</div><div class="line">  File &quot;/usr/lib64/python2.7/xmlrpclib.py&quot;, line 1448, in send_content</div><div class="line">    connection.endheaders(request_body)</div><div class="line">  File &quot;/usr/lib64/python2.7/httplib.py&quot;, line 1013, in endheaders</div><div class="line">    self._send_output(message_body)</div><div class="line">  File &quot;/usr/lib64/python2.7/httplib.py&quot;, line 864, in _send_output</div><div class="line">    self.send(msg)</div><div class="line">  File &quot;/usr/lib64/python2.7/httplib.py&quot;, line 826, in send</div><div class="line">    self.connect()</div><div class="line">  File &quot;/usr/lib64/python2.7/httplib.py&quot;, line 807, in connect</div><div class="line">    self.timeout, self.source_address)</div><div class="line">  File &quot;/usr/lib64/python2.7/socket.py&quot;, line 571, in create_connection</div><div class="line">    raise err</div><div class="line">error: [Errno 111] Connection refused</div></pre></td></tr></table></figure></p>
+<p>上述报错信息提示很清楚是HTTP相关服务未启用<br>解决思路方法：<br>    selinux<br>    iptables<br>    firewalld<br>getenforce<br>systemctl enable httpd<br>systemctl start httpd</p>
+<h4 id="安装配置DHCP"><a href="#安装配置DHCP" class="headerlink" title="安装配置DHCP"></a>安装配置DHCP</h4><p>dhcp可以交给Cobbler 管理,也可以自己独立进行管理,如果dhcp配置文件有误,会导致dhcpd服务无法启动, 如果是cobbler 管理可能导致 cobbler也无法启动</p>
+<p>使用cobbler管理DHCP<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">[root@cobbler ~]# vim /etc/cobbler/settings</div><div class="line"># 修改242行：让cobbler管理DHCP</div><div class="line">manage_dhcp: 1</div><div class="line"></div><div class="line">[root@cobbler ~]# cat /etc/dhcp/dhcpd.conf</div><div class="line">#</div><div class="line"># DHCP Server Configuration file.</div><div class="line">#   see /usr/share/doc/dhcp*/dhcpd.conf.example</div><div class="line">#   see dhcpd.conf(5) man page</div><div class="line">#</div><div class="line"></div><div class="line">[root@cobbler ~]# vim /etc/cobbler/dhcp.template</div><div class="line"></div><div class="line">subnet 192.168.1.0 netmask 255.255.255.0 &#123;</div><div class="line">     option subnet-mask         255.255.255.0;</div><div class="line">     range dynamic-bootp        192.168.1.100 192.168.1.254;</div><div class="line">     default-lease-time         21600;</div><div class="line">     max-lease-time             43200;</div><div class="line">     next-server                $next_server;</div><div class="line">     class &quot;pxeclients&quot; &#123;</div><div class="line">          match if substring (option vendor-class-identifier, 0, 9) = &quot;PXEClient&quot;;</div><div class="line">          if option pxe-system-type = 00:02 &#123;</div><div class="line">                  filename &quot;ia64/elilo.efi&quot;;</div><div class="line">          &#125; else if option pxe-system-type = 00:06 &#123;</div><div class="line">                  filename &quot;grub/grub-x86.efi&quot;;</div><div class="line">          &#125; else if option pxe-system-type = 00:07 &#123;</div><div class="line">                  filename &quot;grub/grub-x86_64.efi&quot;;</div><div class="line">          &#125; else &#123;</div><div class="line">                  filename &quot;pxelinux.0&quot;;</div><div class="line">          &#125;</div><div class="line">     &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="自管理DHCP"><a href="#自管理DHCP" class="headerlink" title="自管理DHCP"></a>自管理DHCP</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"># 可以粘贴模版也可以自己写</div><div class="line">[root@cobbler ~]# cp /usr/share/doc/dhcp*/dhcpd.conf.example dhcpd.conf</div><div class="line">[root@cobbler ~]# grep -v &quot;^#&quot; /etc/dhcp/dhcpd.conf</div><div class="line"></div><div class="line"></div><div class="line">[root@cobbler ~]# vim /etc/dhcp/dhcpd.conf</div><div class="line"></div><div class="line"># option definitions common to all supported networks...</div><div class="line">option domain-name &quot;nigaha.com&quot;;</div><div class="line">option domain-name-servers 114.114.114.114,8.8.8.8;</div><div class="line"></div><div class="line">default-lease-time 86400;</div><div class="line">max-lease-time 86400;</div><div class="line"></div><div class="line"># This is a very basic subnet declaration.</div><div class="line">subnet 192.168.1.0 netmask 255.255.255.0 &#123;</div><div class="line">  range 192.168.1.101 192.168.1.200;</div><div class="line">  option routers 192.168.0.1;</div><div class="line">  next-server 192.168.1.51;</div><div class="line">  filename &quot;pxelinux.0&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意：<br>    dhcp配置文件每行末尾的分号<br>    不要将本机IP分配到地址池<br>    配置完毕重启服务，并加入开机启动项</p>
+<h4 id="导入镜像-distro"><a href="#导入镜像-distro" class="headerlink" title="导入镜像 distro"></a>导入镜像 distro</h4><p>cobbler 导入镜像其实就是复制镜像的文件到<code>/var/www/cobbler/ks_mirror</code></p>
+<p>有光盘挂载光盘没有光盘使用 -o loop 挂载iso文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@cobbler ~]# mount /dev/cdrom  /media/</div><div class="line">[root@cobbler ~]# cd /var/www/cobbler/ks_mirror</div><div class="line">[root@cobbler ks_mirror]# cobbler import --name=centos6.9-x86_64 --path=/media</div><div class="line"># 列出发行版distro</div><div class="line">[root@cobbler ks_mirror]# cobbler distro list</div><div class="line"># 列出各种发行版的不同安装方式, 也就是网卡启动后的菜单界面</div><div class="line">[root@cobbler ks_mirror]# cobbler profile list</div></pre></td></tr></table></figure></p>
+<p>copy完成后，Cobbler 服务器已经搭建好了：<br>    菜单选项<code>profile</code><br>    发行版本<code>distro</code><br>这个菜单选项是cobbler 自己自动生成的 菜单文件位置为：<br>    <code>/var/lib/tftpboot/pxelinux.cfg/default</code><br>镜像文件目录：<br>    <code>/var/www/cobbler/ks_mirror</code><br>查看目录结构可以访问：<br>    <code>http://192.168.1.51/cobbler</code><br>这个默认的安装方式是最小化安装,使用的目录文件为：<br>    <code>/var/lib/cobbler/kickstarts/sample_end.ks</code> </p>
+<p>相关命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">[root@cobbler ~]# cobbler profile --help</div><div class="line">usage</div><div class="line">=====</div><div class="line">cobbler profile add</div><div class="line">cobbler profile copy</div><div class="line">cobbler profile dumpvars</div><div class="line">cobbler profile edit</div><div class="line">cobbler profile find</div><div class="line">cobbler profile getks</div><div class="line">cobbler profile list</div><div class="line">cobbler profile remove</div><div class="line">cobbler profile rename</div><div class="line">cobbler profile report</div><div class="line">[root@cobbler ~]# cobbler distro --help</div><div class="line">usage</div><div class="line">=====</div><div class="line">cobbler distro add</div><div class="line">cobbler distro copy</div><div class="line">cobbler distro edit</div><div class="line">cobbler distro find</div><div class="line">cobbler distro list</div><div class="line">cobbler distro remove</div><div class="line">cobbler distro rename</div><div class="line">cobbler distro report</div></pre></td></tr></table></figure></p>
+<h4 id="导入ks-cfg文件"><a href="#导入ks-cfg文件" class="headerlink" title="导入ks.cfg文件"></a>导入ks.cfg文件</h4><p>ks.cfg 文件目录为：<br><code>/etc/lib/cobbler/kickstarts</code><br>默认文件<br><code>/var/lib/cobbler/kickstarts/sample_end.ks</code></p>
+<p>语法为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cobbler profile add --name=&lt;菜单上的条目&gt; --distro=&lt;发行版&gt; --kickstart=&lt;文件路径&gt;  # 增加ks.cfg</div><div class="line">cobbler profile edit --name=&lt;菜单上的条目&gt; --kickstart=&lt;文件路径&gt;      # 修改ks.cfg</div><div class="line">cobbler profile remove --name=&lt;菜单上的条目&gt;</div></pre></td></tr></table></figure></p>
+<p>将 ks.cfg 文件复制到对应目录为 <code>/etc/lib/cobbler/kickstarts</code><br>增加和修改ks文件的命令注意区别，修改不需要指定 <code>--distro</code> 因为 <code>--name</code> 指定的<code>profile</code> 已经存在且自己知道之前是与那个发行版 (distro) 绑定<br>修改或增加后要运行 <code>cobbler sync</code> 同步 和重启服务</p>
+<p>语法示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cobbler profile add --name=centos6-test --distro=centos6.9-x86_64 --kickstart=/var/lib/cobbler/kickstart/centos6-test-ks.cfg</div><div class="line">cobbler sync</div><div class="line">service cobblerd restart</div></pre></td></tr></table></figure></p>
+<h3 id="自定义ks-cfg文件"><a href="#自定义ks-cfg文件" class="headerlink" title="自定义ks.cfg文件"></a>自定义ks.cfg文件</h3><p>ks.cfg文件制作方法<br>本机安装的 ananaconda-ks.cfg 稍作修改，目录为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@cobbler ~]# ls</div><div class="line">anaconda-ks.cfg</div><div class="line">[root@cobbler ~]# pwd</div><div class="line">/root</div></pre></td></tr></table></figure></p>
+<p>或者使用  <code>system-congif-kickstart</code> 图形界面软件自行制作,<br>将 ks.cfg 文件复制并修改名称，路径为：<br><code>/var/lib/cobbler/kickstarts/</code><br>完成后使用  <code>ksvalidator</code> 检查文件语法（注意目录）<br>例：<code>ksvalidator centos6-test-ks.cfg</code></p>
+<h4 id="ks-cfg-参考文件"><a href="#ks-cfg-参考文件" class="headerlink" title="ks.cfg 参考文件"></a>ks.cfg 参考文件</h4><h5 id="注：此应答文件仅供参考，具体环境具体修改！"><a href="#注：此应答文件仅供参考，具体环境具体修改！" class="headerlink" title="注：此应答文件仅供参考，具体环境具体修改！"></a>注：此应答文件仅供参考，具体环境具体修改！</h5><p>centos 6.9 应答文件参考<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div></pre></td><td class="code"><pre><div class="line">#platform=x86, AMD64, or Intel EM64T</div><div class="line">#version=DEVEL</div><div class="line"># Firewall configuration</div><div class="line">firewall --disabled</div><div class="line"># Install OS instead of upgrade</div><div class="line">install</div><div class="line"># url需要修改可以用cobbler里内置的变量$tree , 可以直接指定路径</div><div class="line"># Use network installation</div><div class="line">url --url=$tree</div><div class="line"># 安装后的密码可以使用cobbler配置文件里的变量 $default_password_crypted 也可手动生成</div><div class="line"># Root password</div><div class="line">rootpw --iscrypted $default_password_crypted</div><div class="line"># System authorization information</div><div class="line">auth  --useshadow  --passalgo=sha512</div><div class="line"># 使用文本安装</div><div class="line"># Use text mode install</div><div class="line">text</div><div class="line">firstboot --disable</div><div class="line"># System keyboard</div><div class="line">keyboard us</div><div class="line"># System language</div><div class="line">lang en_US</div><div class="line"># SELinux configuration</div><div class="line">selinux --disabled</div><div class="line"># Do not configure the X Window System</div><div class="line"># 跳过图形</div><div class="line">skipx</div><div class="line"># Installation logging level</div><div class="line">logging --level=info</div><div class="line"># Reboot after installation</div><div class="line">reboot</div><div class="line"># System timezone</div><div class="line">timezone  Asia/Shanghai</div><div class="line"># Network information</div><div class="line">network  --bootproto=dhcp --device=eth0 --onboot=on</div><div class="line"># System bootloader configuration</div><div class="line">bootloader --location=mbr</div><div class="line"># Clear the Master Boot Record</div><div class="line">zerombr</div><div class="line"># Partition clearing information</div><div class="line">clearpart --all --initlabel </div><div class="line"># Disk partitioning information</div><div class="line">part /boot --fstype=&quot;ext4&quot; --ondisk=sda --size=300</div><div class="line">part / --fstype=&quot;ext4&quot; --ondisk=sda --size=10240</div><div class="line">part /usr --fstype=&quot;ext4&quot; --grow --ondisk=sda --size=1</div><div class="line">part swap --fstype=&quot;swap&quot; --ondisk=sda --size=1024</div><div class="line"></div><div class="line"># 注意安装后脚本定义,定义在安装包前面</div><div class="line">%post</div><div class="line"># 导入公钥</div><div class="line">#!/bin/bash</div><div class="line">[ -d /root/.ssh ] || mkdir /root/.ssh</div><div class="line">cat &gt;&gt; /root/.ssh/authorized_keys &lt;&lt; EOF</div><div class="line">ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA0JO+fs+MtFZYnTTQR7t43ApwzU2H6YPTdTdjfNCUTqmHrO0gAbRe7c+DuesntZb31pmW2wHuB8KyU3i1IFYKDB7ccyvqpfOjfWFKKW34/qpdLWoJ0NlnlgFkmySVX+YsPX0FbxY3yEFNiLXSI95h6U12h0TUPkUxrvZuZZgWIqxNQhu3rOr0nT8jhxfyOnfXxM2+xNVoVAqq+C0zJfYsY0C41IjMFCavSMeKA/OBmgsU4Vg3OQoMx7hDXPB01sRWrDvUp6fea8knnY3QG0imI0K5/T7bRevY7s+Gq11twam9+WPzjXIoKnqMSX785WhqMxEPns8mkxCNrbmIsdTqyQ==</div><div class="line">EOF</div><div class="line">chmod -R 600 /root/.ssh</div><div class="line"></div><div class="line">mkdir /etc/yum.repos.d/repo.bak</div><div class="line">mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/repo.bak</div><div class="line">cat &gt; /etc/yum.repos.d/yumy.repo &lt;&lt; EOF</div><div class="line">[base]</div><div class="line">name=yumy.base</div><div class="line">baseurl=http://172.18.0.1/centos/6/</div><div class="line">gpgcheck=0</div><div class="line"></div><div class="line">[epel]</div><div class="line">name=yumy.epel</div><div class="line">baseurl=http://172.18.0.1/fedora-epel/6/x86_64/</div><div class="line">gpgcheck=0</div><div class="line">EOF</div><div class="line"></div><div class="line"># 设定主机名</div><div class="line">ClientName=`ifconfig eth0 | awk &apos;/inet addr:/&#123;print $2&#125;&apos; | awk -F. &apos;&#123;print $NF&#125;&apos;`</div><div class="line">sed -i &quot;s@HOSTNAME=.*@HOSTNAME=client$ClientName.yy.com@g&quot; /etc/sysconfig/network</div><div class="line"></div><div class="line">cat &gt; /etc/sysconfig/network-scripts/ifcfg-eth1 &lt;&lt;EOF</div><div class="line">DEVICE=eth1</div><div class="line">BOOTPROTO=static</div><div class="line">IPADDR=172.18.51.$ClientName</div><div class="line">PREFIX=16</div><div class="line">GATEWAY=172.18.0.1</div><div class="line">DNS1=172.18.0.1</div><div class="line">EOF</div><div class="line"></div><div class="line">cat &gt; /etc/sysconfig/network-scripts/ifcfg-eth0 &lt;&lt;EOF</div><div class="line">DEVICE=eth0</div><div class="line">BOOTPROTO=static</div><div class="line">IPADDR=192.168.1.$ClientName</div><div class="line">PREFIX=24</div><div class="line">EOF</div><div class="line">%end</div><div class="line"></div><div class="line"># 定义安装软件包</div><div class="line">%packages</div><div class="line">@base</div><div class="line">@compat-libraries</div><div class="line">@debugging</div><div class="line">@development</div><div class="line">@server-platform-devel</div><div class="line">lrzsz</div><div class="line">tree</div><div class="line"></div><div class="line">%end</div></pre></td></tr></table></figure></p>
+<p>centos 7.3应答文件参考<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line">#platform=x86, AMD64, or Intel EM64T</div><div class="line">#version=DEVEL</div><div class="line"># Install OS instead of upgrade</div><div class="line">install</div><div class="line"># Keyboard layouts</div><div class="line">keyboard &apos;us&apos;</div><div class="line"># Root password</div><div class="line">rootpw --iscrypted $default_password_crypted</div><div class="line"># Use network installation</div><div class="line">url --url=$tree</div><div class="line"># System language</div><div class="line">lang en_US</div><div class="line"># Firewall configuration</div><div class="line">firewall --disabled</div><div class="line"># System authorization information</div><div class="line">auth  --useshadow  --passalgo=sha512</div><div class="line"># Use text mode install</div><div class="line">text</div><div class="line"># SELinux configuration</div><div class="line">selinux --disabled</div><div class="line"># Do not configure the X Window System</div><div class="line">skipx</div><div class="line"></div><div class="line"># Network information</div><div class="line">network  --bootproto=dhcp --device=ens32 --onboot=on --ipv6=auto</div><div class="line"># Reboot after installation</div><div class="line">reboot</div><div class="line"># System timezone</div><div class="line">timezone Asia/Shanghai</div><div class="line"># System bootloader configuration</div><div class="line">bootloader --location=mbr </div><div class="line"># Clear the Master Boot Record</div><div class="line">zerombr</div><div class="line"># Partition clearing information</div><div class="line">clearpart --all --initlabel</div><div class="line"># Disk partitioning information</div><div class="line">part /boot --fstype=&quot;xfs&quot; --ondisk=sda --size=300</div><div class="line">part / --fstype=&quot;xfs&quot; --ondisk=sda --size=10240</div><div class="line">part /usr --fstype=&quot;xfs&quot; --grow --ondisk=sda --size=1</div><div class="line">part swap --fstype=&quot;swap&quot; --size=1024</div><div class="line"></div><div class="line">%post</div><div class="line"></div><div class="line">[ -d /root/.ssh ] || mkdir /root/.ssh</div><div class="line">cat &gt;&gt; /root/.ssh/authorized_keys &lt;&lt; EOF</div><div class="line">ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA0JO+fs+MtFZYnTTQR7t43ApwzU2H6YPTdTdjfNCUTqmHrO0gAbRe7c+DuesntZb31pmW2wHuB8KyU3i1IFYKDB7ccyvqpfOjfWFKKW34/qpdLWoJ0NlnlgFkmySVX+YsPX0FbxY3yEFNiLXSI95h6U12h0TUPkUxrvZuZZgWIqxNQhu3rOr0nT8jhxfyOnfXxM2+xNVoVAqq+C0zJfYsY0C41IjMFCavSMeKA/OBmgsU4Vg3OQoMx7hDXPB01sRWrDvUp6fea8knnY3QG0imI0K5/T7bRevY7s+Gq11twam9+WPzjXIoKnqMSX785WhqMxEPns8mkxCNrbmIsdTqyQ==</div><div class="line">EOF</div><div class="line">chmod -R 600 /root/.ssh       </div><div class="line"></div><div class="line">mkdir /etc/yum.repos.d/repo.bak</div><div class="line">mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/repo.bak</div><div class="line">cat &gt; /etc/yum.repos.d/yumy.repo &lt;&lt; EOF</div><div class="line">[base]</div><div class="line">name=yumy.base</div><div class="line">baseurl=http://172.18.0.1/centos/7/</div><div class="line">gpgcheck=0</div><div class="line"></div><div class="line">[epel]</div><div class="line">name=yumy.epel</div><div class="line">baseurl=http://172.18.0.1/fedora-epel/7/x86_64/</div><div class="line">gpgcheck=0</div><div class="line">EOF</div><div class="line"># set hostname with end of ip address</div><div class="line">ClientName=`ifconfig ens32 | awk &apos;/inet /&#123;print $2&#125;&apos; | awk -F. &apos;&#123;print $NF&#125;&apos;`</div><div class="line">echo &quot;Client$&#123;ClientName&#125;.yy.com&quot; &gt; /etc/hostname</div><div class="line"># delete network interface ens*</div><div class="line">rm -rf /etc/sysconfig/network-scripts/ifcfg-ens*</div><div class="line"># rename  ens33 to eth0</div><div class="line">sed -i.bak &quot;/vmlinuz-`uname -r`/s@quiet@quiet net.ifnames=0@&quot; /boot/grub2/grub.cfg</div><div class="line"></div><div class="line">cat &gt; /etc/sysconfig/network-scripts/ifcfg-eth0 &lt;&lt;EOF</div><div class="line">NAME=&quot;eth0&quot;</div><div class="line">DEVICE=&quot;eth0&quot;</div><div class="line">ONBOOT=yes</div><div class="line">BOOTPROTO=none</div><div class="line">IPADDR=192.168.1.$ClientName</div><div class="line">PREFIX=24</div><div class="line">EOF</div><div class="line"></div><div class="line">cat &gt; /etc/sysconfig/network-scripts/ifcfg-eth1 &lt;&lt;EOF</div><div class="line">NAME=&quot;eth1&quot;</div><div class="line">DEVICE=&quot;eth1&quot;</div><div class="line">ONBOOT=yes</div><div class="line">BOOTPROTO=none</div><div class="line">IPADDR=172.18.51.$ClientName</div><div class="line">PREFIX=16</div><div class="line">EOF</div><div class="line"></div><div class="line">%end</div><div class="line"></div><div class="line">%packages</div><div class="line">@base</div><div class="line">@compat-libraries</div><div class="line">@debugging</div><div class="line">@development</div><div class="line">@platform-devel</div><div class="line">abrt-console-notification</div><div class="line">bash-completion</div><div class="line">blktrace</div><div class="line">bridge-utils</div><div class="line"></div><div class="line">%end</div></pre></td></tr></table></figure></p>
+<h4 id="使用Cobbler-Web来管理Cobbler"><a href="#使用Cobbler-Web来管理Cobbler" class="headerlink" title="使用Cobbler-Web来管理Cobbler"></a>使用Cobbler-Web来管理Cobbler</h4><p>web用户认证的方式由多种,这里采用系统默认的认证配置文件中定义<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/etc/cobbler/modules.conf</div><div class="line"></div><div class="line">module = authn_configfile</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@client100 ~]# yum install cobbler-web                 </div><div class="line">[root@client100 ~]# htdigest -c /etc/cobbler/users.digest Cobbler &lt;用户名&gt;</div><div class="line"># 上面的命令 -c 表示创建认证文件 Cobbler 是关键字, 如果创建多个用户管理无需使用 -c 选项</div><div class="line"># htdigest 是由 httpd-tools 软件包提供</div><div class="line">[root@client100 ~]# service httpd restart </div><div class="line">[root@client100 ~]# service cobblerd restart</div></pre></td></tr></table></figure>
+<p>重启后使用 <code>https://192.168.1.51/cobbler_web</code></p>
+<p>默认的用户和密码都为cobbler</p>
+<p>修改用户名和密码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># htdigest  /etc/cobbler/users.digest  &quot;Cobbler&quot; cobbler   # “描述”  用户</div></pre></td></tr></table></figure>
+<p>输入此命令后，会提示修改密码。</p>
+<h4 id="修改Cobbler的启动安装界面"><a href="#修改Cobbler的启动安装界面" class="headerlink" title="修改Cobbler的启动安装界面"></a>修改Cobbler的启动安装界面</h4><p>Cobbler的启动安装界面可以有自定义的提示，通修改pxe的模板文件来实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[root@cobbler ~]# cat /etc/cobbler/pxe/pxedefault.template</div><div class="line">DEFAULT menu</div><div class="line">PROMPT 0</div><div class="line">MENU TITLE Cobbler this is test==^-^ |   #提示栏信息 </div><div class="line">TIMEOUT 200</div><div class="line">TOTALTIMEOUT 6000</div><div class="line">ONTIMEOUT $pxe_timeout_profile</div><div class="line">LABEL local                         #默认的启动列表</div><div class="line">        MENU LABEL (local)</div><div class="line">        MENU DEFAULT</div><div class="line">        LOCALBOOT -1</div><div class="line">$pxe_menu_items</div><div class="line">MENU end</div></pre></td></tr></table></figure>
+<p>执行sync 使命令生效：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># cobbler sync</div></pre></td></tr></table></figure>
+<h4 id="Cobbler功能特性"><a href="#Cobbler功能特性" class="headerlink" title="Cobbler功能特性:"></a>Cobbler功能特性:</h4><ul>
+<li>快速网络安装linux 操作系统的服务，支持众多的Linux 发行版：Red Hat 、Fedora 、CentOS 、Debian 、Ubuntu和SuSE ，也可以支持网络安装windows</li>
+<li>PXE 的二次封装，将多种安装参数封装到一个菜单</li>
+<li>Python 编写</li>
+<li>提供了CLI 和Web的管理形式</li>
+</ul>
+<h4 id="Cobbler-目录作用总结"><a href="#Cobbler-目录作用总结" class="headerlink" title="Cobbler 目录作用总结"></a>Cobbler 目录作用总结</h4><p>数据目录<br>    /var/lib/cobbler/config :用于存放distros，system，profiles 等信息配置文件<br>    /var/lib/cobbler/triggers : 用于存放用户定义的cobbler命令<br>    /var/lib/cobbler/kickstart : 默认存放kickstart文件<br>    /var/lib/cobbler/loaders : 存放各种引导程序<br>镜像目录<br>    /var/www/cobbler/ks_mirror/ :导入的发行版系统的所有数据目录,<br>    /var/www/cobbler/images :导入发行版的kernel和initrd镜像用于远程网络启动<br>    /var/www/cobbler/repo_mirror/ : yum 仓库存储目录<br>日志文件<br>    /var/log/cobbler/installing :客户端的安装日志<br>    /var/log/cobbler/cobbler.log :cobbler日志<br>cobbler 配置文件总结<br>配置文件目录 /etc/cobbler<br>    /etc/cobbler/settings : cobbler 主配置文件<br>    /etc/cobbler/iso/ : iso模板配置文件<br>    /etc/cobbler/pxe : pxe模板文件<br>    /etc/cobbler/power : 电源配置文件<br>    /etc/cobbler/user.conf : web服务授权配置文件<br>    /etc/cobbler/users.digest : web访问的用户名密码配置文件<br>    /etc/cobbler/dhcp.template : dhcp服务器的的配置末班<br>    /etc/cobbler/dnsmasq.template : dns服务器的配置模板<br>    /etc/cobbler/tftpd.template : tftp服务的配置模板<br>    /etc/cobbler/modules.conf : 模块的配置文件</p>
+
+            
+        
+        </div>
+        
+            
+            
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+        
+            <a href="/2017/08/19/LINUX KERNEL启动参数/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>LINUX KERNEL启动参数
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2016 ~ 2017</span>
+        <span>❤</span>
+        <span>nigaha</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="http://nigaha.com"> 眼一睁 </a>
+        </span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+<script src="/script/search.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.mobileHeader();
+    Nlvi.back2top();
+    Nlvi.smoothScroll();
+    Nlvi.onView();
+    Nlvi.showToc();
+    Nlvi.showComments();
+    Nlvi.showReward();
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    
+        
+    
+    <div class="backtop syuanpi dead toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+    
+    <div class="search" id="search">
+        <div class="mask" id="mask"></div>
+        <div class="search-wrapper syuanpi">
+            <h1 id="search-header" class="syuanpi">搜索一下？</h1>
+            <div class="input">
+                <input type="text" id="local-search-input" results="0" name="">
+            </div>
+            <div id="local-search-result"></div>
+        </div>
+    </div>
+    <script>
+    var GREETING = {
+        morning: "当我们探索时，就要发现到真理",
+        noon: "人的天职在于勇于探索真理。",
+        after: "一件事实是一条没有性别的真理",
+        night: "真理有时可能变得黯淡，但它永远不会熄灭",
+        midnight: "真理在人那里获得生命力，并且展现出来"
+    }
+    $(document).ready(function(){
+        Nlvi.search();
+    });
+    </script>
+
+</body>
+</html>
