@@ -246,25 +246,122 @@
             
                 <h3 id="三剑客之sed"><a href="#三剑客之sed" class="headerlink" title="三剑客之sed"></a>三剑客之sed</h3><a id="more"></a>
 <p>sed 命令<br>sed：Stream EDitor<br>    行编辑器（全屏编辑器：vi）</p>
-<p>sed：模式空间<br>    默认比编辑原文件，仅对模式空间的数据做处理；<br>    处理结束后，将模式空间打印至屏幕；</p>
-<p>sed [options] ‘AddressCommand’ file …<br>    地址命令中间不需要空白字符可以直接写<br>    对于file中的复合地址指定范围内的行，执行相应命令<br>[options]:<br>    -n: 静默模式，不再默认显示模式空间中的内容<br>    -i: 直接修改原文件（慎用）<br>    -e SCRIPT -e SCRIPT    : 可以同时执行多个脚本<br>    -f /PATH/TO/SED_SCRIPT ：使用脚本的文件路径来对文件进行处理<br>        sed -f /path/to/scripts file<br>    -r: 表示使用扩展正则表达式</p>
-<p>Address:<br>1、StartLine,EndLine（从起始行到结束行，中间逗号）<br>    例如1,100<br>    $:最后一行<br>2、/RegExp/（使用正则表达式指定的模式）<br>    例：/^root/<br>3、/pattern1/,/pattern2/<br>    第一次被pattern1匹配到的行开始，至第一次被pattern2匹配到的行结束，这中间的所有行<br>4、LineNumber<br>    指定的行<br>5、StratLine,+N<br>    从StartLine开始，向后的N行；</p>
-<p>Command:<br>    d:删除符合条件的行<br>        例：<br>            sed ‘1,2d’ /etc/fstab<br>            sed ‘3,$d’ /etc/fstab<br>            sed ‘/oot/d’ /etc/fstab<br>            sed ‘1,+2d’ /etc/fstab<br>            sed ‘1d’ /etc/fstab<br>    p:显示打印符合条件的行（因为处理过后模式空间会保留内容，所以p打印出的结果为2次）<br>        例：<br>            sed ‘/^\//p’ /etc/fstab<br>    a \string: 在指定的行后面追加新行，内容为string<br>        例：<br>            sed ‘/^\//a # hello word’ /etc/fstab<br>            sed ‘/^\//a # hello word\n# hello linux’ /etc/fstab<br>                \n：可以用于换行<br>    i \string: 在指定的行前面添加新航，内容为string<br>        （使用方法和a类似）<br>    r filename:将指定的文件内容添加至符合条件的行处<br>        例：<br>            sed ‘$r /etc/issue’ /etc/fstab<br>                此命令可以用于合并文件使用，这个和cat命令连续读取2个文件的效果是一样的，sed可以中间插入。<br>            sed ‘1,2r /etc/issue’ /etc/fstab<br>                （在2行插入）<br>    w filename:将地址指定范围内的内容另存至指定的文件中<br>        例：<br>            sed ‘/oot/w /tmp/oot.txt’ /etc/fstab<br>    s/pattern/string/ 修饰符:<br>        也可以写成s/// s@@@ s###<br>        （pattern模式可以使用正则表达式，string被替换不可以）<br>        （默认只替换每行中第一次被模式匹配到的字符串）<br>            修饰符：<br>                g:全局替换<br>                i：查找时忽略大小写<br>        例：<br>            sed ‘s/oot/OOT/‘ /etc/fstab<br>            sed ‘s/^\//#/‘ /etc/fstab<br>        后项引用()，\1，\2<br>            例：<br>                文本内容sed.txt，将”l..e”的字符后面增加字母”r”<br>                    hello,like<br>                    hi, my love<br>                后项引用<br>                sed ‘s#(l..e)#\1r#g’ sed.txt</p>
-<pre><code>可以使用sed的替换法：
-sed &apos;s#^l..e$#&amp;r# sed.txt
-    &amp;：引用模式匹配整个串
-</code></pre><p>练习：<br>将history打印结果中所有空白删除<br>history | sed ‘s#^[[:space:]]*##g’ | cut -d’ ‘    -f1                </p>
-<p>1、删除/etc/grub.conf文件中行首的空白符；<br>    sed -r ‘s@^[[:spapce:]]+@@g’ /etc/grub.conf </p>
-<p>2、替换/etc/inittab文件中”id:3:initdefault:”一行中的数字为5;<br>    sed -r ‘s@(id:)[0-9](:initdefault:)@\15\2@g’ /etc/inittab </p>
-<p>3、删除/etc/inittab文件中的空白行；<br>    sed -r ‘/^$/d’ etc/inittab</p>
-<p>4、删除/etc/inittab文件中开头的#号；<br>    sed -r ‘s@^#@@g’ /etc/inittab</p>
-<p>5、删除某文件中开头的#号及后面的空白字符，但要求#号后面必须有空白字符；<br>    sed -r ‘s@^#[[:space:]]+@@g’ </p>
-<p>6、删除某文件中以空白字符后面跟#类的行中的开头的空白字符及#<br>    sed -r ‘s@^[[:space:]]+#@@g’</p>
-<p>7、去除一个文件路径的目录名称；<br>    echo “/etc/rc.d/“ | sed -r ‘s@^(/.<em>/)[^/]+/?@\1@g’<br>    基名：<br>    echo “/etc/rc.d/“ | sed -r ‘s@^/.</em>/([^/]+)/?@\1@g’</p>
-<p>某文件：</p>
-<p>#abc</p>
-<h1 id="hello"><a href="#hello" class="headerlink" title="hello"></a>hello</h1><pre><code>#  hi
-</code></pre><h1 id="he"><a href="#he" class="headerlink" title="he"></a>he</h1>
+<p>sed：模式空间</p>
+<ul>
+<li>默认比编辑原文件，仅对模式空间的数据做处理；</li>
+<li>处理结束后，将模式空间打印至屏幕；</li>
+</ul>
+<p>sed [options] ‘AddressCommand’ file …<br>    地址命令中间不需要空白字符可以直接写</p>
+<ul>
+<li>对于file中的复合地址指定范围内的行，执行相应命令<br>[options]:</li>
+</ul>
+<ul>
+<li>-n: 静默模式，不再默认显示模式空间中的内容</li>
+<li>-i: 直接修改原文件（慎用）</li>
+<li>-e SCRIPT -e SCRIPT    : 可以同时执行多个脚本</li>
+<li>-f /PATH/TO/SED_SCRIPT ：使用脚本的文件路径来对文件进行处理<ul>
+<li>sed -f /path/to/scripts file</li>
+</ul>
+</li>
+<li>-r: 表示使用扩展正则表达式</li>
+</ul>
+<p>Address:<br>1、StartLine,EndLine（从起始行到结束行，中间逗号）</p>
+<ul>
+<li>例如1,100</li>
+<li>$:最后一行<br>2、/RegExp/（使用正则表达式指定的模式）</li>
+<li>例：/^root/<br>3、/pattern1/,/pattern2/</li>
+<li>第一次被pattern1匹配到的行开始，至第一次被pattern2匹配到的行结束，这中间的所有行<br>4、LineNumber</li>
+<li>指定的行<br>5、StratLine,+N</li>
+<li>从StartLine开始，向后的N行；</li>
+</ul>
+<p>Command:</p>
+<ul>
+<li>d:删除符合条件的行<ul>
+<li>例：<ul>
+<li>sed ‘1,2d’ /etc/fstab</li>
+<li>sed ‘3,$d’ /etc/fstab</li>
+<li>sed ‘/oot/d’ /etc/fstab</li>
+<li>sed ‘1,+2d’ /etc/fstab</li>
+<li>sed ‘1d’ /etc/fstab</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>p:显示打印符合条件的行（因为处理过后模式空间会保留内容，所以p打印出的结果为2次）<ul>
+<li>例：<br>  sed ‘/^\//p’ /etc/fstab</li>
+</ul>
+</li>
+<li>a \string: 在指定的行后面追加新行，内容为string<ul>
+<li>例：<ul>
+<li>sed ‘/^\//a # hello word’ /etc/fstab</li>
+<li>sed ‘/^\//a # hello word\n# hello linux’ /etc/fstab<ul>
+<li>\n：可以用于换行</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>i \string: 在指定的行前面添加新航，内容为string</p>
+<ul>
+<li>（使用方法和a类似）<br>r filename:将指定的文件内容添加至符合条件的行处</li>
+<li>例：<ul>
+<li>sed ‘$r /etc/issue’ /etc/fstab<ul>
+<li>此命令可以用于合并文件使用，这个和cat命令连续读取2个文件的效果是一样的，sed可以中间插入。</li>
+</ul>
+</li>
+<li>sed ‘1,2r /etc/issue’ /etc/fstab<ul>
+<li>（在2行插入）<br>w filename:将地址指定范围内的内容另存至指定的文件中</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>例：<ul>
+<li>sed ‘/oot/w /tmp/oot.txt’ /etc/fstab<br>s/pattern/string/ 修饰符:</li>
+</ul>
+</li>
+<li>也可以写成s/// s@@@ s###</li>
+<li>（pattern模式可以使用正则表达式，string被替换不可以）</li>
+<li>（默认只替换每行中第一次被模式匹配到的字符串）<ul>
+<li>修饰符：<ul>
+<li>g:全局替换</li>
+<li>i：查找时忽略大小写</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>例：<ul>
+<li>sed ‘s/oot/OOT/‘ /etc/fstab</li>
+<li>sed ‘s/^\//#/‘ /etc/fstab</li>
+</ul>
+</li>
+<li><p>后项引用()，\1，\2</p>
+<ul>
+<li><p>例：</p>
+<ul>
+<li>文本内容sed.txt，将”l..e”的字符后面增加字母”r”<ul>
+<li>hello,like</li>
+<li>hi, my love</li>
+</ul>
+</li>
+<li>后项引用    </li>
+<li><p>sed ‘s#(l..e)#\1r#g’ sed.txt</p>
+</li>
+<li><p>可以使用sed的替换法：</p>
+</li>
+<li>sed ‘s#^l..e$#&amp;r# sed.txt<ul>
+<li>&amp;：引用模式匹配整个串</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>练习：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">将history打印结果中所有空白删除</div><div class="line">history | sed &apos;s#^[[:space:]]*##g&apos; | cut -d&apos; &apos;	-f1				</div><div class="line"></div><div class="line">1、删除/etc/grub.conf文件中行首的空白符；</div><div class="line">	sed -r &apos;s@^[[:spapce:]]+@@g&apos; /etc/grub.conf </div><div class="line"></div><div class="line">2、替换/etc/inittab文件中&quot;id:3:initdefault:&quot;一行中的数字为5;</div><div class="line">	sed -r &apos;s@\(id:\)[0-9]\(:initdefault:\)@\15\2@g&apos; /etc/inittab </div><div class="line"></div><div class="line">3、删除/etc/inittab文件中的空白行；</div><div class="line">	sed -r &apos;/^$/d&apos; etc/inittab</div><div class="line"></div><div class="line">4、删除/etc/inittab文件中开头的#号；</div><div class="line">	sed -r &apos;s@^#@@g&apos; /etc/inittab</div><div class="line"></div><div class="line">5、删除某文件中开头的#号及后面的空白字符，但要求#号后面必须有空白字符；</div><div class="line">	sed -r &apos;s@^#[[:space:]]+@@g&apos; </div><div class="line"></div><div class="line">6、删除某文件中以空白字符后面跟#类的行中的开头的空白字符及#</div><div class="line">	sed -r &apos;s@^[[:space:]]+#@@g&apos;</div><div class="line"></div><div class="line">7、去除一个文件路径的目录名称；</div><div class="line">	echo &quot;/etc/rc.d/&quot; | sed -r &apos;s@^(/.*/)[^/]+/?@\1@g&apos;</div><div class="line">	基名：</div><div class="line">	echo &quot;/etc/rc.d/&quot; | sed -r &apos;s@^/.*/([^/]+)/?@\1@g&apos;</div><div class="line">某文件：</div><div class="line">#abc</div><div class="line"># hello</div><div class="line">    #  hi</div><div class="line">#    he</div></pre></td></tr></table></figure></p>
+
             
         
         </div>
@@ -277,16 +374,16 @@ sed &apos;s#^l..e$#&amp;r# sed.txt
         
     <nav class="article-page">
         
-            <a href="/2017/04/25/bash_简单脚本/" id="art-left" class="art-right">
+            <a href="/2017/04/25/bash_if语句脚本/" id="art-left" class="art-right">
                 <span class="next-title">
                     bash简单脚本<i class="iconfont icon-right"></i> 
                 </span>
             </a>
         
         
-            <a href="/2017/04/23/bash_shell条件判断/" id="art-right" class="art-left">
+            <a href="/2017/04/23/bash_组合条件/" id="art-right" class="art-left">
                 <span class="prev-title"> 
-                    <i class="iconfont icon-left"></i>bash条件判断
+                    <i class="iconfont icon-left"></i>bash组合条件判断
                 </span>
             </a>
         

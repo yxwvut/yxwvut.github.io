@@ -248,8 +248,32 @@
 <p>grep 命令</p>
 <p>grep、egrep、fgrep</p>
 <p>grep：根据模式搜索文本，并将符合模式的问恩行显示出来<br>Pattern（模式）：文本字符和正则表达式的元字符组合而成匹配条件</p>
-<p>grep [OPTIONS] PATTERN [FILE…]<br>grep [OPTIONS] [-e PATTERN | -f FILE] [FILE…]<br>    例：<br>        grep root /etc/passwd<br>        grep “$USER” /etc/passwd<br>        grep ‘$USER’ /etc/passwd<br>        grep <code>whoami</code> /etc/passwd</p>
-<p>grep 选项：<br>    默认使用基本正则表达是定义的模式来过滤文本的命令；<br>    –color：高亮显示<br>    -i：忽略大小写<br>    -v：反向搜索，显示没有被模式匹配到的行<br>    -o：只显示被模式匹配到的字符串<br>    -q：静默模式，不输出任何信息<br>    -n：显示匹配的行号<br>    -c：统计匹配的行数<br>    -A #：after，后#行<br>  -B #：before，前#行<br>  -C #：context，前后各#行<br>  -e：实现多个选项间的逻辑or关系<br>        例：grep –e ‘cat’ -e ‘dog’ file<br>  -w：匹配整个单词<br>     -E：使用ERE，使用扩展正则表达式<br>     -F：相当于fgrep，不支持正则表达式</p>
+<p>grep [OPTIONS] PATTERN [FILE…]<br>grep [OPTIONS] [-e PATTERN | -f FILE] [FILE…]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">例： </div><div class="line">	grep root /etc/passwd</div><div class="line">	grep &quot;$USER&quot; /etc/passwd</div><div class="line">	grep &apos;$USER&apos; /etc/passwd</div><div class="line">	grep `whoami` /etc/passwd</div></pre></td></tr></table></figure></p>
+<p>grep 选项：</p>
+<ul>
+<li>默认使用基本正则表达是定义的模式来过滤文本的命令；<ul>
+<li>–color：高亮显示</li>
+<li>-i：忽略大小写</li>
+<li>-v：反向搜索，显示没有被模式匹配到的行</li>
+<li>-o：只显示被模式匹配到的字符串</li>
+<li>-q：静默模式，不输出任何信息</li>
+<li>-n：显示匹配的行号</li>
+<li>-c：统计匹配的行数</li>
+<li>-A #：after，后#行</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>-B #：before，前#行</li>
+<li>-C #：context，前后各#行</li>
+<li>-e：实现多个选项间的逻辑or关系<ul>
+<li>例：grep –e ‘cat’ -e ‘dog’ file</li>
+</ul>
+</li>
+<li>-w：匹配整个单词</li>
+<li>-E：使用ERE，使用扩展正则表达式</li>
+<li>-F：相当于fgrep，不支持正则表达式</li>
+</ul>
 <p>扩展正则表达式：ERE<br>egrep = grep -E</p>
 <p>语法：<br>egrep [OPTIONS] PATTERN [FILE…]</p>
 <p>快速模式搜索：fast grep<br>fgrep：不支持正则表达式<br>在fgrep搜索中所有正则表达式将被当成字符来进行搜索匹配</p>

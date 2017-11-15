@@ -241,31 +241,38 @@
         <div class="post-content syuanpi riseIn-light back-3">
             
                 <h3 id="bash条件判断，脚本基础语句使用"><a href="#bash条件判断，脚本基础语句使用" class="headerlink" title="bash条件判断，脚本基础语句使用"></a>bash条件判断，脚本基础语句使用</h3><a id="more"></a>
-<p>bash 条件判断<br>    如果用户不存在<br>        添加用户，给密码并显示添加成功<br>    否则(目标存在)<br>        显示如果已经存在，没有添加</p>
-<p>bash脚本语法检测：<br>    bash -n filetest.sh<br>bash脚本单步执行显示：<br>    bash -x filetest.sh</p>
-<p>bash 中如何实现条件判断<br>条件判断测试类型<br>    整数测试:<br>        A是否为6,$A是否为6<br>    字符测试：<br>        变量保存是否为A、B、C、D<br>    文件测试：<br>        判断一个文件是否存在</p>
-<p>条件测试的表达式描述<br>    [ expression ]            bash命令<br>    [[ expression ]]        bash关键字<br>    test expression            text命令<br>INT1=66<br>INT2=99<br>[ $INT1 -eq $INT2 ]<br>[[ $INT1 -eq $INT2 ]]<br>test $INT1 -eq $INT2</p>
-<p>整数比较：<br>    -eq    相等<br>    -ne    不等<br>    -gt    大于<br>    -lt    小于<br>    -ge    大于等于<br>    -le    小于等于</p>
-<p>字符测试：<br>[ $A = $B ] 等号两边都需要加空格，不然会被认为是附值。<br>    == : 测试是否相等，相等为真，不等为假<br>    != : 测试是否不等，不等为真，相等为假</p>
-<pre><code>&gt;  : 大于
-&lt;  : 小于
--n string ： 测试指定字符串是否为空，空则真，不空则假
--s string ： 测试指定字符串是否为不空，不空为真，空则为假
-</code></pre><p>文件测试：<br>    -e FILE: 测试文件是否存在<br>    -f FILE: 测试文件是否为普通文件<br>    -d FILE: 测试指定路径是否为目录<br>    -r FILE: 测试当前用户对指定文件是否有读取权限<br>    -w FILE: 测试当前用户对指定文件是否有写入权限<br>    -x FILE: 测试当前用户对指定文件是否有执行权限</p>
-<p>[ -e /etc/inittab ]<br>[ -x /etc/rc.d/rc.sysinit ]</p>
-<p>组合测试条件：<br>    -a：与关系<br>    -o：或关系<br>    !：非关系</p>
-<p>命令间的逻辑关系：<br>    逻辑或（||）：如果前面真，后面不判断<br>            如果前面假，后面必须判断</p>
-<pre><code>逻辑与（&amp;&amp;）：如果前面假，后面不判断
-        如果前面真，后面必须判断
-    例：id user1 &amp;&gt; /dev/null &amp;&amp; echo &quot;Hello,deny&quot;
-
-    扩展：如果用户不存在，就添加用户(user2)
-        ! id user2 &amp;&gt; /dev/null &amp;&amp; useradd user2
-        id user2 &amp;&gt; /dev/null || useradd user2
-</code></pre><p>exit可以直接突出当前脚本，并赋予一条执行状态<br>    exit number（数值在0~255之间，0为成功，其他为不成功）            </p>
-<p>注意：<br>    脚本结束变量就会撤销（变量的好处就是一次性修改能够应用到整个程序中）；<br>    如果脚本没有明确定义退出状态码，那么，最后执行的命令的退出码即为脚本的退出状态码；</p>
-<p>bash 变量的类型：<br>    本地变量：当前shell工作的进程<br>    （局部变量）<br>    环境变量：当前shell及其子shell<br>    位置变量：<br>        $1,$2,…（位置变量$1就是脚本中的第一个参数）<br>        shift（轮换）<br>    特殊变量：<br>        $?<br>        $#:参数的个数<br>        $*:参数列表<br>        $@:参数列表<br>命令：修正文件执行特性<br>参数：命令的作用对象</p>
-<p>变量名称规则：<br>    1.只能包含字母、数字和下划线，并且不能数字开头；<br>    2.不应该根系统中已有的环境变量重名；<br>    3.见名知意 </p>
+<p>bash 条件判断</p>
+<ul>
+<li>如果用户不存在<ul>
+<li>添加用户，给密码并显示添加成功</li>
+</ul>
+</li>
+<li>否则(目标存在)<ul>
+<li>显示如果已经存在，没有添加</li>
+</ul>
+</li>
+</ul>
+<p>bash脚本语法检测：</p>
+<ul>
+<li>bash -n filetest.sh<br>bash脚本单步执行显示：</li>
+<li>bash -x filetest.sh</li>
+</ul>
+<p>bash 中如何实现条件判断<br>条件判断测试类型</p>
+<ul>
+<li>整数测试:<ul>
+<li>A是否为6,$A是否为6</li>
+</ul>
+</li>
+<li>字符测试：<ul>
+<li>变量保存是否为A、B、C、D</li>
+</ul>
+</li>
+<li>文件测试：<ul>
+<li>判断一个文件是否存在</li>
+</ul>
+</li>
+</ul>
+<p>条件测试的表达式描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div></pre></td><td class="code"><pre><div class="line">	[ expression ]			bash命令</div><div class="line">	[[ expression ]]		bash关键字</div><div class="line">	test expression			text命令</div><div class="line"></div><div class="line">INT1=66</div><div class="line">INT2=99</div><div class="line">[ $INT1 -eq $INT2 ]</div><div class="line">[[ $INT1 -eq $INT2 ]]</div><div class="line">test $INT1 -eq $INT2</div><div class="line">```	</div><div class="line">整数比较：</div><div class="line">*	-eq	相等</div><div class="line">*	-ne	不等</div><div class="line">*	-gt	大于</div><div class="line">*	-lt	小于</div><div class="line">*	-ge	大于等于</div><div class="line">*	-le	小于等于</div><div class="line"></div><div class="line">字符测试：</div><div class="line">[ $A = $B ] 等号两边都需要加空格，不然会被认为是附值。</div><div class="line">*	== : 测试是否相等，相等为真，不等为假</div><div class="line">*	!= : 测试是否不等，不等为真，相等为假</div><div class="line">*	\&gt;  : 大于</div><div class="line">*	&lt;  : 小于</div><div class="line">*	-n string ： 测试指定字符串是否为空，空则真，不空则假</div><div class="line">*	-s string ： 测试指定字符串是否为不空，不空为真，空则为假</div><div class="line"></div><div class="line">文件测试：</div><div class="line">*	-e FILE: 测试文件是否存在</div><div class="line">*	-f FILE: 测试文件是否为普通文件</div><div class="line">*	-d FILE: 测试指定路径是否为目录</div><div class="line">*	-r FILE: 测试当前用户对指定文件是否有读取权限</div><div class="line">*	-w FILE: 测试当前用户对指定文件是否有写入权限</div><div class="line">*	-x FILE: 测试当前用户对指定文件是否有执行权限</div><div class="line">	</div><div class="line">[ -e /etc/inittab ]</div><div class="line">[ -x /etc/rc.d/rc.sysinit ]</div><div class="line"></div><div class="line">组合测试条件：</div><div class="line">*	-a：与关系</div><div class="line">*	-o：或关系</div><div class="line">*	!：非关系</div><div class="line"></div><div class="line">命令间的逻辑关系：</div><div class="line">-	逻辑或（||）：如果前面真，后面不判断</div><div class="line">		*	如果前面假，后面必须判断</div><div class="line"></div><div class="line">-	逻辑与（&amp;&amp;）：如果前面假，后面不判断</div><div class="line">		*	如果前面真，后面必须判断</div><div class="line">	-	例：id user1 &amp;&gt; /dev/null &amp;&amp; echo &quot;Hello,deny&quot;</div><div class="line">		</div><div class="line">	-	扩展：如果用户不存在，就添加用户(user2)</div><div class="line">		*	! id user2 &amp;&gt; /dev/null &amp;&amp; useradd user2</div><div class="line">		*	id user2 &amp;&gt; /dev/null || useradd user2</div><div class="line"></div><div class="line">			</div><div class="line">			</div><div class="line">exit可以直接突出当前脚本，并赋予一条执行状态</div><div class="line">-	exit number（数值在0~255之间，0为成功，其他为不成功）			</div><div class="line"></div><div class="line">注意：</div><div class="line">-	脚本结束变量就会撤销（变量的好处就是一次性修改能够应用到整个程序中）；</div><div class="line">-	如果脚本没有明确定义退出状态码，那么，最后执行的命令的退出码即为脚本的退出状态码；</div><div class="line"></div><div class="line">bash 变量的类型：</div><div class="line">-	本地变量：当前shell工作的进程</div><div class="line">-	（局部变量）</div><div class="line">-	环境变量：当前shell及其子shell</div><div class="line">-	位置变量：</div><div class="line">	*	$1,$2,...（位置变量$1就是脚本中的第一个参数）</div><div class="line">	*	shift（轮换）</div><div class="line">-	特殊变量： </div><div class="line">	*	$?</div><div class="line">	*	$#:参数的个数		</div><div class="line">	*	$*:参数列表</div><div class="line">	*	$@:参数列表</div><div class="line">命令：修正文件执行特性</div><div class="line">参数：命令的作用对象</div><div class="line"></div><div class="line">变量名称规则：</div><div class="line">-	1.只能包含字母、数字和下划线，并且不能数字开头； </div><div class="line">-	2.不应该根系统中已有的环境变量重名；</div><div class="line">-	3.见名知意</div></pre></td></tr></table></figure></p>
 <p>#！/bin/bash</p>
 <p>#要引用命令的返回结果要使用命令替换</p>
 <p>#把wc命令的结果保存在LINES变量当中<br>LINES=<code>wc -l /etc/inittab</code></p>
@@ -278,89 +285,53 @@
 <p>#之后的判断就是：假 || echo “/etc/inittab is a small file”</p>
 <p>#输出结果为：/etc/inittab is a small file</p>
 <p>#总结：当&amp;&amp;判断得出的结果为假时，则执行 || 的判断输出。</p>
-<p>#同时，当&amp;&amp;判断得出的结果为真时，则不执行 || 判断</p>
-<p>同理<br>如果用户存在，就显示用户已存在。否则，就添加此用户。<br>    id user1 &amp;&amp; echo “user1 exists” || useradd user1</p>
-<p>如果用户不存在，就添加此用户。否则，显示其已经存在。<br>    ! id user1 &amp;&amp; useradd user1 || echo “user1 exists”</p>
-<p>如果用户不存在，添加用户并给予密码。否则，显示其已经存在。<br>    ! id user1 &amp;&amp; useradd user1 &amp;&amp; echo “user1” | passwd –stdin user1 || echo “user1 exists”</p>
-<p>练习：<br>1、添加3个用户user1、user2、user3，但要求先判断用户是否存在，不存在而后再添加<br>2、显示当前系统上共有多少个用户</p>
+<p>#同时，当&amp;&amp;判断得出的结果为真时，则不执行 || 判断<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">同理</div><div class="line">如果用户存在，就显示用户已存在。否则，就添加此用户。</div><div class="line">-	id user1 &amp;&amp; echo &quot;user1 exists&quot; || useradd user1</div><div class="line"></div><div class="line">如果用户不存在，就添加此用户。否则，显示其已经存在。</div><div class="line">-	! id user1 &amp;&amp; useradd user1 || echo &quot;user1 exists&quot;</div><div class="line"></div><div class="line">如果用户不存在，添加用户并给予密码。否则，显示其已经存在。</div><div class="line">-	! id user1 &amp;&amp; useradd user1 &amp;&amp; echo &quot;user1&quot; | passwd --stdin user1 || echo &quot;user1 exists&quot;</div><div class="line"></div><div class="line">练习：</div><div class="line">1、添加3个用户user1、user2、user3，但要求先判断用户是否存在，不存在而后再添加</div><div class="line">2、显示当前系统上共有多少个用户</div></pre></td></tr></table></figure></p>
 <p>#!/bin/bash<br>! id user1 &amp;&gt; /dev/null &amp;&amp; useradd user1 &amp;&amp; echo “user1” | passwd –stdin user1 &amp;&gt; /dev/null || echo “user1 exists”<br>! id user2 &amp;&gt; /dev/null &amp;&amp; useradd user2 &amp;&amp; echo “user2” | passwd –stdin user2 &amp;&gt; /dev/null || echo “user2 exists”<br>! id user3 &amp;&gt; /dev/null &amp;&amp; useradd user3 &amp;&amp; echo “user3” | passwd –stdin user3 &amp;&gt; /dev/null || echo “user3 exists”</p>
-<p>USERS=<code>wc -l /etc/passwd | cut -d: -f1</code><br>echo “$USERS users”</p>
-<p>练习：<br>1、如果用户UID为0，显示其为管理员<br>2、否则，显示其为普通用户</p>
+<p>USERS=<code>wc -l /etc/passwd | cut -d: -f1</code><br>echo “$USERS users”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">练习：</div><div class="line">1、如果用户UID为0，显示其为管理员</div><div class="line">2、否则，显示其为普通用户</div></pre></td></tr></table></figure></p>
 <p>#!/bin/bash<br>NAME=root</p>
-<p>#NAME=user1<br>USERID=<code>id -u $NAME</code><br>[ $USERID -eq 0 ] &amp;&amp; echo “Admin” || echo “Common user”</p>
-<p>条件判断，控制结构</p>
+<p>#NAME=user1<br>USERID=<code>id -u $NAME</code><br>[ $USERID -eq 0 ] &amp;&amp; echo “Admin” || echo “Common user”<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">条件判断，控制结构</div></pre></td></tr></table></figure></p>
 <p>要求：    如果if和then在同一行必须写为<br>        if [[ condition ]]; then</p>
-<pre><code>        #statements
+<pre><code>    -    #statements
     fi
 也可以写为
     if [[ condition ]]
     then
         #statements
     fi
-</code></pre><p>单分支if语句<br>if 判断条件； then    #如果判断条件为真，则then执行后面语句<br>    语句1        #语句statement<br>    语句2        #单分支语句如果不满足，就略过不会继续执行<br>    。。。<br>fi</p>
-<p>双分支的if语句<br>if 判断条件； then    #如果判断条件为真，则then执行后面语句<br>    语句1<br>    语句2<br>    。。。<br>else            #如果判断条件为假，则else执行后面语句<br>    语句3<br>    语句4<br>    。。。<br>fi    </p>
-<p>多分支的if语句<br>if 判断条件1； then<br>    statement1<br>    。。。<br>elif 判断条件2； then<br>    statement2<br>    。。。<br>elif 判断条件3； then<br>    statement3<br>    。。。<br>else<br>    statement4<br>    。。。<br>fi</p>
-<p>练习：<br>查看用户user17是否存在，存在在屏幕显示。否则创建并添加密码，并通知创建成功。</p>
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">单分支if语句</div></pre></td></tr></table></figure>
+<p>if 判断条件； then    #如果判断条件为真，则then执行后面语句<br>    语句1        #语句statement<br>    语句2        #单分支语句如果不满足，就略过不会继续执行<br>    。。。<br>fi<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">双分支的if语句</div></pre></td></tr></table></figure></p>
+<p>if 判断条件； then    #如果判断条件为真，则then执行后面语句<br>    语句1<br>    语句2<br>    。。。<br>else            #如果判断条件为假，则else执行后面语句<br>    语句3<br>    语句4<br>    。。。<br>fi<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">多分支的if语句</div></pre></td></tr></table></figure></p>
+<p>if 判断条件1； then<br>    statement1<br>    。。。<br>elif 判断条件2； then<br>    statement2<br>    。。。<br>elif 判断条件3； then<br>    statement3<br>    。。。<br>else<br>    statement4<br>    。。。<br>fi<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">练习：</div><div class="line">查看用户user17是否存在，存在在屏幕显示。否则创建并添加密码，并通知创建成功。</div></pre></td></tr></table></figure></p>
 <p>#!/bin/bash<br>NAME=user17</p>
-<p>if id $NAME &amp;&gt; /dev/null; then<br>    echo “$NAME exists”<br>else<br>    useradd $NAME<br>    echo $NAME | passwd –stdin $NAME &amp;&gt; /dev/null<br>    echo  “Add $NAME finished”<br>fi</p>
-<p>练习：<br>1、如果用户UID为0，显示其为管理员<br>2、否则，显示其为普通用户</p>
+<p>if id $NAME &amp;&gt; /dev/null; then<br>    echo “$NAME exists”<br>else<br>    useradd $NAME<br>    echo $NAME | passwd –stdin $NAME &amp;&gt; /dev/null<br>    echo  “Add $NAME finished”<br>fi<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">练习：</div><div class="line">1、如果用户UID为0，显示其为管理员</div><div class="line">2、否则，显示其为普通用户</div></pre></td></tr></table></figure></p>
 <p>#!/bin/bash<br>NAME=root</p>
 <p>#NAME=user1<br>USERID=<code>id -u $NAME</code><br>#<br>if [ $USERID -eq 0 ]; then<br>    echo “Admin”<br>else<br>    echo “Common user”<br>fi</p>
 <p>也可以</p>
 <p>NAME=root</p>
-<p>#NAME=user1<br>#<br>if [ <code>id -u $NAME</code> -eq 0 ]; then<br>    echo “Admin”<br>else<br>    echo “Common user”<br>fi</p>
-<p>#<code>id -u $NAME</code>为执行结果</p>
-<h1 id="例：id-u-user1"><a href="#例：id-u-user1" class="headerlink" title="例：id -u user1"></a>例：id -u user1</h1><h1 id="其执行结果为1001，所以用单引号引起"><a href="#其执行结果为1001，所以用单引号引起" class="headerlink" title="其执行结果为1001，所以用单引号引起"></a>其执行结果为1001，所以用单引号引起</h1><p>#id $NAME为状态结果</p>
-<h1 id="例：echo"><a href="#例：echo" class="headerlink" title="例：echo $?"></a>例：echo $?</h1><h1 id="其状态结果为1或者0"><a href="#其状态结果为1或者0" class="headerlink" title="其状态结果为1或者0"></a>其状态结果为1或者0</h1><p>#所以本题中使用的是查看执行结果进行比较</p>
-<p>在bash中，要引用一个命令是否能够执行成功，想要引用这个命令的状态结果一定不能加引号<br>要么让其执行成功（状态结果），要么取其执行状态结果$?</p>
-<p>练习：判断当前系统上是否有用户的默认shell为bash：<br>    如果有，就显示其中一个用户名；<br>    否则就显示没有此类用户；</p>
+<p>#NAME=user1<br>#<br>if [ <code>id -u $NAME</code> -eq 0 ]; then<br>    echo “Admin”<br>else<br>    echo “Common user”<br>fi<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">#`id -u $NAME`为执行结果</div><div class="line">#	例：id -u user1</div><div class="line">#		其执行结果为1001，所以用单引号引起</div><div class="line">#id $NAME为状态结果</div><div class="line">#	例：echo $?</div><div class="line">#		其状态结果为1或者0</div><div class="line">#所以本题中使用的是查看执行结果进行比较</div><div class="line"></div><div class="line">在bash中，要引用一个命令是否能够执行成功，想要引用这个命令的状态结果一定不能加引号</div><div class="line">要么让其执行成功（状态结果），要么取其执行状态结果$?</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">练习：判断当前系统上是否有用户的默认shell为bash：</div><div class="line">	如果有，就显示其中一个用户名；</div><div class="line">	否则就显示没有此类用户；</div></pre></td></tr></table></figure></p>
 <p>#!/bin/bash<br>#<br>grep “\&lt;bash$” /etc/passwd &amp;&gt; /dev/null<br>RETVAL=$?</p>
-<p>if [ $RETVAL -eq 0 ]; then<br>    AUSER=`grep “\&lt;bash$” /etc/passwd | head -l | cut -d: -f1’<br>    echo “$AUSER is one of such users.”<br>else<br>    echo “No such user”<br>fi</p>
-<p>练习：给定一个文件，比如/etc/inittab，判断此文件中是否有空白行：<br>    如果有，则显示其空白行数；<br>    否则，显示没有空白行；</p>
+<p>if [ $RETVAL -eq 0 ]; then<br>    AUSER=`grep “\&lt;bash$” /etc/passwd | head -l | cut -d: -f1’<br>    echo “$AUSER is one of such users.”<br>else<br>    echo “No such user”<br>fi<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">练习：给定一个文件，比如/etc/inittab，判断此文件中是否有空白行：</div><div class="line">	如果有，则显示其空白行数；</div><div class="line">	否则，显示没有空白行；</div></pre></td></tr></table></figure></p>
 <p>#!/bin/bash<br>#<br>FILE=/etc/inittab<br>if [ ! -e $FILE ]; then<br>    echo “No $FILE”<br>    exit 1<br>fi</p>
-<p>KH=<code>grep &#39;^$&#39; /etc/inittab | wc -l</code><br>if [ $KH -gt 0 ]; then<br>    echo “$KH”<br>else<br>    echo “没有空白行”<br>fi</p>
-<p>练习：给定一个用户，判断其UID与GID是否一样<br>    如果相同，就显示此用户为”good guy”；<br>    否则，就显示此用户为”bad guy”；</p>
-<p>#!/bin/bash<br>#<br>username=user1<br>userID=<code>id -u $USERNAME</code><br>groupID=<code>id -g $USERNAME</code><br>if [ $userID -eq $groupID ]; then<br>    echo “good guy”<br>else<br>    echo “bad guy”<br>fi</p>
-<p>进一步要求：不使用id命令获取其id号；</p>
+<p>KH=<code>grep &#39;^$&#39; /etc/inittab | wc -l</code><br>if [ $KH -gt 0 ]; then<br>    echo “$KH”<br>else<br>    echo “没有空白行”<br>fi<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">练习：给定一个用户，判断其UID与GID是否一样</div><div class="line">	如果相同，就显示此用户为&quot;good guy&quot;；</div><div class="line">	否则，就显示此用户为&quot;bad guy&quot;；</div></pre></td></tr></table></figure></p>
+<p>#!/bin/bash<br>#<br>username=user1<br>userID=<code>id -u $USERNAME</code><br>groupID=<code>id -g $USERNAME</code><br>if [ $userID -eq $groupID ]; then<br>    echo “good guy”<br>else<br>    echo “bad guy”<br>fi<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">进一步要求：不使用id命令获取其id号；</div></pre></td></tr></table></figure></p>
 <p>#!/bin/bash<br>#<br>USERNAME=user1<br>if ! grep “^$USERNAME>“ /etc/passwd &amp;&gt; /dev/null; then<br>    echo “No such user：$USERNAME”<br>    exit 1<br>fi</p>
-<p>userID=<code>grep &quot;^$USERNAME\&gt;&quot; /etc/passwd | cut -d: -f3</code><br>groupID=<code>grep &quot;^$USERNAME\&gt;&quot; /etc/passwd | cut -d: -f4</code><br>if [ $userID -eq $groupID ]; then<br>    echo “good guy”<br>else<br>    echo “bad guy”<br>fi</p>
-<p>练习：给定一个用户，获取其密码警告期限，然后判断用户最近一次修改密码时间距其最长使用期限是否小于警告期限；<br>    提示：算出运算的方法$[$A-$B]:表示变量A的值减去变量B的值的结果；<br>    如果小于，则显示”warning”；<br>    否则，就显示”OK”；<br>帮助命令：<br>    bc<br>    date +%s</p>
-<p>shell中如何使用算数运算<br>    A=3<br>    B=6<br>    使用算数运算表达式进行计算<br>    let命令：<br>        let C=$A+$B</p>
-<pre><code>$[算数运算表达式]
-    C=$[$A+$B]
-
-$((算数运算表达式))
-    C=$(($A+$B))
-
-expr 算术运算表达式，表达式中个操作数及运算符之间要有空格，而且要使用命令引用
-    C=`expr $A + $B`
-</code></pre><p> 圆整：丢弃小数点后面数字，取得整数<br>    在此取得的时间戳都会进行圆整</p>
+<p>userID=<code>grep &quot;^$USERNAME\&gt;&quot; /etc/passwd | cut -d: -f3</code><br>groupID=<code>grep &quot;^$USERNAME\&gt;&quot; /etc/passwd | cut -d: -f4</code><br>if [ $userID -eq $groupID ]; then<br>    echo “good guy”<br>else<br>    echo “bad guy”<br>fi<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">练习：给定一个用户，获取其密码警告期限，然后判断用户最近一次修改密码时间距其最长使用期限是否小于警告期限；</div><div class="line">	提示：算出运算的方法$[$A-$B]:表示变量A的值减去变量B的值的结果；</div><div class="line">	如果小于，则显示&quot;warning&quot;；</div><div class="line">	否则，就显示&quot;OK&quot;；</div><div class="line">帮助命令：</div><div class="line">	bc</div><div class="line">	date +%s</div><div class="line">	</div><div class="line">### shell中如何使用算数运算</div><div class="line">	A=3</div><div class="line">	B=6</div><div class="line">	使用算数运算表达式进行计算</div><div class="line">-	let命令：</div><div class="line">	*	let C=$A+$B</div><div class="line">	</div><div class="line">-	$[算数运算表达式]</div><div class="line">	*	C=$[$A+$B]</div><div class="line"></div><div class="line">-	$((算数运算表达式))</div><div class="line">	*	C=$(($A+$B))</div><div class="line">	</div><div class="line">-	expr 算术运算表达式，表达式中个操作数及运算符之间要有空格，而且要使用命令引用</div><div class="line">	*	C=`expr $A + $B`</div><div class="line"> 圆整：丢弃小数点后面数字，取得整数</div><div class="line">	在此取得的时间戳都会进行圆整</div></pre></td></tr></table></figure></p>
 <p>TIMESTAMP=’date +%s’<br>let THEDAYTIME=$TIMESTAMP/86400<br>echo $THEDAYTIME    # 1970到现在天数    </p>
 <p>#!/bin/bash<br>#<br>W=<code>grep &quot;student&quot; /etc/shadow | cut -d: -f6</code><br>S=<code>date +%s</code><br>T=<code>expr $S/86400</code><br>L=<code>grep &quot;^student&quot; /etc/shadow | cut -d: -f3</code><br>SY=$[$L-$[$T-$N]]</p>
-<p>if [ $SY -lt $W ]; then<br>    echo ‘worning’<br>else<br>    echo ‘OK’<br>fi</p>
-<p>练习：判定命令历史中的历史命令的总条目是否大于1000；<br>    如果大于，则显示”some command will gone”；<br>    否则显示”OK”</p>
+<p>if [ $SY -lt $W ]; then<br>    echo ‘worning’<br>else<br>    echo ‘OK’<br>fi<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">练习：判定命令历史中的历史命令的总条目是否大于1000；</div><div class="line">	如果大于，则显示&quot;some command will gone&quot;；</div><div class="line">	否则显示&quot;OK&quot;</div></pre></td></tr></table></figure></p>
 <p>#！/bin/bash<br>#<br>HISTORY=’history | tail -l | cut -d’ ‘ -f2’</p>
-<p>if [ $HISTORY -qt 1000 ]; then<br>    echo “some command will gone”<br>else<br>    echo “OK”<br>fi</p>
-<p>文件判断练习：<br>判断一个文件是否存在例/etc/inittab</p>
+<p>if [ $HISTORY -qt 1000 ]; then<br>    echo “some command will gone”<br>else<br>    echo “OK”<br>fi<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">文件判断练习：</div><div class="line">判断一个文件是否存在例/etc/inittab</div></pre></td></tr></table></figure></p>
 <p>#!/bin/bash<br>#<br>FILE=/etc/inittab</p>
-<p>if [ -e $FILE ]; then<br>    echo “OK”<br>else<br>    echo “No such file”<br>fi</p>
-<p>练习：<br>给定一个文件；<br>如果是一个普通文件，就显示；<br>如果是一个目录，也显示；<br>否则，显示此为无法识别文件；<br>定义状态码222；</p>
+<p>if [ -e $FILE ]; then<br>    echo “OK”<br>else<br>    echo “No such file”<br>fi<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">练习：</div><div class="line">给定一个文件；</div><div class="line">如果是一个普通文件，就显示；</div><div class="line">如果是一个目录，也显示；</div><div class="line">否则，显示此为无法识别文件；</div><div class="line">定义状态码222；</div></pre></td></tr></table></figure></p>
 <p>#!/bin/bash<br>#<br>FIEL=/etc/inittab</p>
 <p>if [ ! -e $FILE ]; then<br>    echo “No such file”<br>    exit 222<br>fi</p>
-<p>if [ -f $FILE ]; then<br>    echo “Common file”<br>elif [ -d $FIEL ]; then<br>    echo “Directory”<br>else<br>    echo “Unknown”<br>fi</p>
-<p>示例：(变量运用）<br>脚本名称为filetest<br>接受一个参数（文件路径）<br>判定：此参数如果是存在文件，显示“OK”；<br>否则显示“No such file”</p>
+<p>if [ -f $FILE ]; then<br>    echo “Common file”<br>elif [ -d $FIEL ]; then<br>    echo “Directory”<br>else<br>    echo “Unknown”<br>fi<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">示例：(变量运用）</div><div class="line">脚本名称为filetest</div><div class="line">接受一个参数（文件路径）</div><div class="line">判定：此参数如果是存在文件，显示“OK”；</div><div class="line">否则显示“No such file”</div></pre></td></tr></table></figure></p>
 <p>#!/bin/bash<br>#<br>if [ $# -lt 1 ]; then<br>    echo “Usage : ./filetest.sh ARG1 [ARG2 …]”<br>    exit 7<br>fi</p>
-<p>if [ -e $1 ]; then<br>    echo “OK”<br>else<br>    echo “No such file”<br>fi</p>
-<p>执行：<br>./filetest.sh /etc/inittab</p>
-<p>示例：（shift轮换用法）<br>shift命令可以一次行轮换多条参数，默认为1<br>脚本名称为：shift</p>
-<p>#!/bin/bash<br>#<br>echo $1<br>shift<br>echo $1<br>shift<br>echo $1</p>
-<p>执行：<br>./shift.sh 1 2 3<br>显示：<br>    1<br>    2<br>    3</p>
-<p>多个轮换参数</p>
-<p>#!/bin/bash<br>#<br>echo $1<br>shift 2<br>echo $1<br>shift 2<br>echo $1</p>
-<p>执行：<br>./shift.sh 1 2 3 4 5<br>显示：<br>    1<br>    3<br>    5</p>
-<p>练习：<br>给脚本传递两个参数（整数）；<br>显示此两者之和，和乘积；</p>
+<p>if [ -e $1 ]; then<br>    echo “OK”<br>else<br>    echo “No such file”<br>fi<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">执行：</div><div class="line">./filetest.sh /etc/inittab</div><div class="line"></div><div class="line">示例：（shift轮换用法）</div><div class="line">shift命令可以一次行轮换多条参数，默认为1</div><div class="line">脚本名称为：shift</div></pre></td></tr></table></figure></p>
+<p>#!/bin/bash<br>#<br>echo $1<br>shift<br>echo $1<br>shift<br>echo $1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">执行：</div><div class="line">./shift.sh 1 2 3</div><div class="line">显示：</div><div class="line">	1</div><div class="line">	2</div><div class="line">	3</div><div class="line"></div><div class="line">多个轮换参数</div></pre></td></tr></table></figure></p>
+<p>#!/bin/bash<br>#<br>echo $1<br>shift 2<br>echo $1<br>shift 2<br>echo $1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">执行：</div><div class="line">./shift.sh 1 2 3 4 5 </div><div class="line">显示：</div><div class="line">	1</div><div class="line">	3</div><div class="line">	5</div><div class="line"></div><div class="line">练习：</div><div class="line">给脚本传递两个参数（整数）；</div><div class="line">显示此两者之和，和乘积；</div></pre></td></tr></table></figure></p>
 <p>#!/bin/bash<br>#<br>if [ $# -lt 2 ]; then<br>    echo “Usage:calc.sh ARG1 ARG2”<br>    exit 3<br>fi</p>
-<p>echo “The sum is: $[$1+$2]”<br>echo “The prod is：$[$1*$2]”</p>
+<p>echo “The sum is: $[$1+$2]”<br>echo “The prod is：$[$1*$2]”<br>```</p>
 
             
         
@@ -374,16 +345,16 @@ expr 算术运算表达式，表达式中个操作数及运算符之间要有空
         
     <nav class="article-page">
         
-            <a href="/2017/04/24/bash_sed/" id="art-left" class="art-right">
+            <a href="/2017/04/23/bash_组合条件/" id="art-left" class="art-right">
                 <span class="next-title">
-                    sed使用方法<i class="iconfont icon-right"></i> 
+                    bash组合条件判断<i class="iconfont icon-right"></i> 
                 </span>
             </a>
         
         
-            <a href="/2017/04/23/bash_组合条件/" id="art-right" class="art-left">
+            <a href="/2017/04/22/bash_变量/" id="art-right" class="art-left">
                 <span class="prev-title"> 
-                    <i class="iconfont icon-left"></i>bash组合条件判断
+                    <i class="iconfont icon-left"></i>bash变量
                 </span>
             </a>
         

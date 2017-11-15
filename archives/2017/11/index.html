@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <title> bash简单脚本 · 言在语中 </title>
+    <title>
+  
+    归档 · 言在语中
+  
+</title>
     <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -16,8 +20,6 @@
 
 
 
-
-    <meta name="keywords" content="linux, bash, 脚本, Nlvi" />
 
 <link rel="stylesheet" href="/style/style.css">
 <script src="/script/jquery.min.js"></script>
@@ -209,105 +211,45 @@
         <main class="main" id="main">
             
     
-    <article class="post">
-        <header class="post-header">
-            <div class="post-time syuanpi riseIn-light back-1">
-                <span>2017年4月25日</span>
-                
-                
-                    <span class="post-category"><a href="/categories/linux/">linux</a></span>
-                
-                
-            </div>
-            <h1 class="post-title syuanpi riseIn-light back-2">
-            
-                bash简单脚本
-            
-            </h1>
+    <div class="archive syuanpi riseIn-light" id="archive">
+        
+            <h1 class="archive-title">Total</h1>
+            <span class="archive-num">一共有 18 篇文章</span>
+        
+        <div class="archive-list">
+            <ul>
+        
             
                 
-                    <div class="post-tags syuanpi riseIn-light back-3">
+                
+                
                     
-                        <a href="/tags/linux/">linux</a>
+                     
+                        <h2 class="archive-year"> 2017 </h2>
                     
-                        <a href="/tags/bash/">bash</a>
-                    
-                        <a href="/tags/脚本/">脚本</a>
-                    
-                    </div>
                 
             
-        </header>
-        <div class="post-content syuanpi riseIn-light back-3">
             
-                <h3 id="bash循环语句使用"><a href="#bash循环语句使用" class="headerlink" title="bash循环语句使用"></a>bash循环语句使用</h3><a id="more"></a>
-<p>字符测试：<br> [ $A = $B ] 等号两边都需要加空格，不然会被认为是附值。<br>    == : 测试是否相等，相等为真，不等为假<br>    != : 测试是否不等，不等为真，相等为假</p>
-<pre><code>&gt;  : 大于
-&lt;  : 小于
--n string ： 测试指定字符串是否为空，空则真，不空则假
--s string ： 测试指定字符串是否为不空，不空为真，空则为假
-</code></pre><p>脚本练习：<br>传递一个用户名参数给脚本，判断此用户的用户名跟其基本组的组名是否一致，并将结果显示出来。</p>
-<p>#!/bin/bash<br>#<br>if ! id $1 &amp;&gt;/dev/null; then<br>    echo “No such user”<br>    exit 10<br>fi </p>
-<p>if [ ‘id -n -u $1’ == ‘id -n -g $1’ ]; then<br>    echo “yiyang”<br>else<br>    echo “buyiyang”<br>fi</p>
-<p>传递一个参数（单个字符）给脚本，如参数为q、Q、quit、Quit，就退出脚本，否则，就显示用户的参数；</p>
-<p>#!/bin/bash<br>#<br>if [ $1 = ‘q’ ];then<br>    echo “Quiting…”<br>    exit 1<br>elif [ $1 = ‘Q’ ];then<br>    echo “Quiting…”<br>    exit 2<br>elif [ $1 = ‘quit’ ];then<br>    echo “Quiting…”<br>    exit 3<br>elif [ #1 = ‘Quit’ ];then<br>    echo “Quiting…”<br>    exit 4<br>else<br>    echo $1<br>fi<br>可以使用&amp;&amp;来进行判断</p>
-<p>传递三个参数恶搞i脚本，第一个为整数，第二个为算出运算符，第三个为整数，将计算结果显示出来，要求保留两位精度。形如：<br>./calc.sh 5 / 2<br>提示：bc命令<br>echo “scale=2;111/22;” | bc(保留2位小数，111/2)<br>同样可以：<br>bc &lt;&lt;&lt; “scale=2;111/22;”</p>
-<p>传递3个参数给脚本，参数均为用户名。将此些用户的帐号信息提取出来后放置于/tmp/testusers.txt文件中，并要求每一行行首有行号。<br>echo “1 $LINE” &gt;&gt; /tmp/testusers<br>echo “2 $LINE” &gt;&gt; /tmp/testusers</p>
-<p>脚本需求：<br>判断当前主机的CPU生产商，其信息在/proc/cpuinfo文件中vendor id一行中。<br>如果其生产商为AuthenticAMD,就显示其为AMD公司；<br>如果其生产商为GenuineIntel,就显示其为Intel公司；<br>否则，就说其为非主流CPU公司；</p>
-<p>写一个脚本：<br>给脚本传递三个整数，判断其中的最大数和最小数，并显示出来。<br>MAX=0<br>MAX -eq $1<br>MAX=$1<br>MAX -lt $2<br>MAX=$2</p>
-<p>循环：循环控制结构<br>进入条件，退出条件<br>常用循环：<br>    for<br>    while<br>    until</p>
-<p>for:<br>    for 变量 in 列表;do<br>        循环体<br>    done</p>
-<p>当列表被遍历完成之后，退出；<br>for I in 1 2 3 4 5 6 7 8 9;do<br>    加法运算<br>done</p>
-<p>如何生成列表：<br>数字列表:<br>｛1..100｝<br>也可以使用 seq 命令生成<br>seq 命令：<br>    ‘seq [起始数 [步进长度]] 结束数’<br>        起始数省略后默认起始数为’1’<br>        不近长度省略后默认步进长度为’1’<br>文件名列表：<br>    例如：<br>        ‘ls /etc’</p>
-<p>declare 声明：<br>    declare -i SUM=0(声明SUM为0的整数)<br>        -i : integer(整数)<br>    declare -x<br>        -x : (环境)</p>
-<p>求1,..,100之和；</p>
-<p>#!/bin/bash<br>#<br>declare -i SUM=0</p>
-<p>for I in {1..100};do<br>    let SUM=$[$SUM+$I]<br>done</p>
-<p>echo “The sum is: $SUM”</p>
-<p>添加10个用户user1到user10，密码同用户名；但要求只有用户不存在的情况下才能添加；</p>
-<p>#!/bin/bash<br>#</p>
-<p>for I in {1..10}; do<br>    if id user$I &amp;&gt; /dev/null; then<br>        echo “user$I exists”<br>    else<br>        useradd user$I<br>        echo user$I | passwd –stdin user$I &amp;&gt; /dev/null<br>        echo “add user user$I finished”<br>    fi<br>done</p>
-<p>删除10个用户</p>
-<p>#!/bin/bash<br>#</p>
-<p>for I in  {1..10}; do<br>    if id user$I &amp;&gt; /dev/null; then<br>        userdel -r user$I<br>        echo “delete user$I finished”<br>    else<br>        echo “user$I not exists”<br>    fi<br>done</p>
-<p>给定脚本参数，如果是–add则添加10个用户，如果是–del则删除10个用户</p>
-<p>#!/bin/bash<br>#</p>
-<p>if [ $# -lt 1 ]; then<br>    echo “Usage:adminusers ARG”<br>    exit 3<br>fi</p>
-<p>if [ $1 == ‘–add’ ]; then<br>    for I in {1..10]; do<br>        if id user$I &amp;&gt; /dev/null; then<br>            echo “user$I exists”<br>        else<br>            useradd user$I<br>            echo user$I | passwd –stdin user$I &amp;&gt; /dev/null<br>            echo “add user$I finished”<br>        fi<br>    done<br>elif [ $1 == ‘–del’ ]; then<br>    for I in  {1..10}; do<br>        if id user$I &amp;&gt; /dev/null; then<br>            userdel -r user$I<br>            echo “delete user$I finished”<br>        else<br>            echo “no user$I”<br>        fi<br>    done<br>else<br>    echo “Unknown ARG”<br>    exit 4<br>fi</p>
-<p>指定使用–add USER1，USER2，ABC，tom；如果不存在则添加用户USER1，USER2，ABC，tom；并显示添加成功；<br>同样使用–add USER1，USER2，ABC，tom；如果存在则删除用户USER1，USER2，ABC，tom；并显示删除成功；<br>同时给予–help帮助信息</p>
-<p>#!/bin/bash<br>#</p>
-<p>if [ $# -lt 1 ]; then<br>        echo “Usage:yyuser ARG”<br>        exit 3<br>fi</p>
-<p>if [ $1 == ‘–add’ ]; then<br>        for I in <code>echo $2 | sed &#39;s/,/ /g&#39;</code>; do<br>                if id $I &amp;&gt; /dev/null; then<br>                        echo “$I exists”<br>                else<br>                        useradd $I<br>                        echo $I | passwd –stdin $I &amp;&gt; /dev/null<br>                        echo “add $I finished”<br>                fi<br>        done<br>elif [ $1 == ‘–del’ ]; then<br>        for I in <code>echo $2 | sed &#39;s/,/ /g&#39;</code>; do<br>                if id $I &amp;&gt; /dev/null; then<br>                        userdel -r $I<br>                        echo “delete $I finished”<br>                else<br>                        echo “$I not exist”<br>                fi<br>        done<br>elif [ $1 == ‘–help’ ]; then<br>        echo “Usage: yyuser.sh –add USER1,USER2,… | –del USER1,USER2,… | –help”<br>else<br>        echo “Unknown options”<br>fi</p>
+            <li class="archive-post">
+                <span class="archive-post-time">
+                
+                    11-14
+                
+                </span>
+                <span class="archive-post-link">
+                    <a href="/2017/11/14/bash_case语句脚本/"></a>
+                </span>
+            </li>
 
-            
         
+            </ul>
         </div>
-        
-            
-            
-        
-    </article>
+    </div>
     
-        
-    <nav class="article-page">
-        
-            <a href="/2017/05/21/github+hexo搭建静态博客/" id="art-left" class="art-right">
-                <span class="next-title">
-                    github+hexo搭建静态博客<i class="iconfont icon-right"></i> 
-                </span>
-            </a>
-        
-        
-            <a href="/2017/04/24/bash_sed/" id="art-right" class="art-left">
-                <span class="prev-title"> 
-                    <i class="iconfont icon-left"></i>sed使用方法
-                </span>
-            </a>
-        
+    <nav class="pagination">
+        <span class="page-number current">1</span>
     </nav>
 
-        
-    
 
 
         </main>
@@ -374,8 +316,6 @@ $(document).ready(function(){
 })
 </script>
     </div>
-    
-        
     
     <div class="backtop syuanpi dead toTop" id="backtop">
     <i class="iconfont icon-up"></i>
