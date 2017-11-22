@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> bash选择结构case语句 · 言在语中 </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="browsermode" content="application">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="言在语中">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="msapplication-navbutton-color" content="#666666">
+<meta name= "format-detection" content="telephone=no" />
+<meta name="keywords" content="nlvi, Nlvi" />
+
+
+
+
+
+    <meta name="keywords" content="linux, bash, 脚本, Nlvi" />
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "言在语中",
+        author: "nigaha",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud-mask"></div>  
+<div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/DHCP/" style="font-size: 14px;">DHCP</a> <a href="/tags/DNS/" style="font-size: 14px;">DNS</a> <a href="/tags/Kickstart应答文件/" style="font-size: 14px;">Kickstart应答文件</a> <a href="/tags/RAID/" style="font-size: 14px;">RAID</a> <a href="/tags/awk/" style="font-size: 14px;">awk</a> <a href="/tags/bash/" style="font-size: 14px;">bash</a> <a href="/tags/cobbler/" style="font-size: 14px;">cobbler</a> <a href="/tags/github/" style="font-size: 14px;">github</a> <a href="/tags/grep/" style="font-size: 14px;">grep</a> <a href="/tags/hexo/" style="font-size: 14px;">hexo</a> <a href="/tags/linux/" style="font-size: 14px;">linux</a> <a href="/tags/sed/" style="font-size: 14px;">sed</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/三剑客/" style="font-size: 14px;">三剑客</a> <a href="/tags/变量/" style="font-size: 14px;">变量</a> <a href="/tags/实验/" style="font-size: 14px;">实验</a> <a href="/tags/文件管理/" style="font-size: 14px;">文件管理</a> <a href="/tags/文本工具/" style="font-size: 14px;">文本工具</a> <a href="/tags/服务servers/" style="font-size: 14px;">服务servers</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/理论/" style="font-size: 14px;">理论</a> <a href="/tags/脚本/" style="font-size: 14px;">脚本</a> <a href="/tags/自动化安装系统/" style="font-size: 14px;">自动化安装系统</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">言在语中</a></span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        <li class="menu-item">
+            <a href="javascript:;" id="search">
+                <span>搜索</span>
+                
+                    <span class="menu-item-label">search</span>
+                
+            </a>
+        </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+</header>
+<div class="mobile-header">
+    <div class="mobile-header-body">
+        <div class="mobile-header-list">
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/">
+                        <span>文章</span>
+                        
+                            <span class="menu-item-label">article</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/archives">
+                        <span>归档</span>
+                        
+                            <span class="menu-item-label">archives</span>
+                        
+                    </a>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item inner-cloud">
+                    <div class="mobile-nav-tag">
+                        <a href="javascript:;" id="mobile-tags">
+                            <span>标签</span>
+                            
+                                <span class="menu-item-label">tags</span>
+                            
+                        </a>
+                    </div>
+                    <div class="mobile-nav-tagcloud">
+                        <div class="mobile-tagcloud-inner">
+                            <a href="/tags/DHCP/" style="font-size: 14px;">DHCP</a> <a href="/tags/DNS/" style="font-size: 14px;">DNS</a> <a href="/tags/Kickstart应答文件/" style="font-size: 14px;">Kickstart应答文件</a> <a href="/tags/RAID/" style="font-size: 14px;">RAID</a> <a href="/tags/awk/" style="font-size: 14px;">awk</a> <a href="/tags/bash/" style="font-size: 14px;">bash</a> <a href="/tags/cobbler/" style="font-size: 14px;">cobbler</a> <a href="/tags/github/" style="font-size: 14px;">github</a> <a href="/tags/grep/" style="font-size: 14px;">grep</a> <a href="/tags/hexo/" style="font-size: 14px;">hexo</a> <a href="/tags/linux/" style="font-size: 14px;">linux</a> <a href="/tags/sed/" style="font-size: 14px;">sed</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/三剑客/" style="font-size: 14px;">三剑客</a> <a href="/tags/变量/" style="font-size: 14px;">变量</a> <a href="/tags/实验/" style="font-size: 14px;">实验</a> <a href="/tags/文件管理/" style="font-size: 14px;">文件管理</a> <a href="/tags/文本工具/" style="font-size: 14px;">文本工具</a> <a href="/tags/服务servers/" style="font-size: 14px;">服务servers</a> <a href="/tags/正则表达式/" style="font-size: 14px;">正则表达式</a> <a href="/tags/理论/" style="font-size: 14px;">理论</a> <a href="/tags/脚本/" style="font-size: 14px;">脚本</a> <a href="/tags/自动化安装系统/" style="font-size: 14px;">自动化安装系统</a>
+                        </div>
+                    </div>
+                </div>
+            
+            
+            
+                <div class="mobile-nav-item">
+                    <a href="/about">
+                        <span>关于</span>
+                        
+                            <span class="menu-item-label">about</span>
+                        
+                    </a>
+                </div>
+            
+            
+        </div>
+    </div>
+    <div class="mobile-header-nav">
+        <div class="mobile-header-item" id="mobile-left">
+            <div class="header-menu-item">
+                <span class="header-menu-line"></span>
+            </div>
+        </div>
+        <h1 class="mobile-header-title">
+            <a href="/">言在语中</a>
+        </h1>
+        <div class="mobile-header-item"></div>
+    </div>
+</div>
+
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年5月9日</span>
+                
+                
+                    <span class="post-category"><a href="/categories/linux/">linux</a></span>
+                
+                
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                bash选择结构case语句
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/linux/">linux</a>
+                    
+                        <a href="/tags/bash/">bash</a>
+                    
+                        <a href="/tags/脚本/">脚本</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <h3 id="bash脚本case语句"><a href="#bash脚本case语句" class="headerlink" title="bash脚本case语句"></a>bash脚本case语句</h3><a id="more"></a>
+<p>case语句:<br>变量和常量比较，若不等则继续往下比较，如果最后不匹配则使用兜底结果。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">case SWITCH in</div><div class="line">	value1)</div><div class="line">		statement</div><div class="line">		...</div><div class="line">		;;</div><div class="line">	value2)</div><div class="line">		statement</div><div class="line">		...</div><div class="line">		;;</div><div class="line">	*)</div><div class="line">		statement</div><div class="line">		...</div><div class="line">		;;</div><div class="line">esac</div></pre></td></tr></table></figure></p>
+<p>示例1：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">#</div><div class="line">case $1 in</div><div class="line">[0-9])</div><div class="line">	echo &quot;digit&quot;</div><div class="line">	;;</div><div class="line">[a-z])</div><div class="line">	echo &quot;Lower&quot;</div><div class="line">	;;</div><div class="line">[A-Z])</div><div class="line">	echo &quot;Upper&quot;</div><div class="line">	;;</div><div class="line">*)</div><div class="line">	echo &quot;Special character&quot;</div><div class="line">esac</div></pre></td></tr></table></figure></p>
+<p>示例2：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">#</div><div class="line">case $1 in</div><div class="line">&apos;start&apos;)</div><div class="line">	echo &quot;start server ...&quot;</div><div class="line">	;;</div><div class="line">&apos;stop&apos;)</div><div class="line">	echo &quot;stop server ...&quot;</div><div class="line">	;;</div><div class="line">&apos;status&apos;)</div><div class="line">	echo &quot;Running ...&quot;</div><div class="line">	;;</div><div class="line">*)</div><div class="line">	echo &quot;`basename $0` &#123;start|stop|restart|startus&#125;&quot;</div><div class="line">	;;</div><div class="line">esac</div></pre></td></tr></table></figure></p>
+<p>示例3：<br>接受选项及参数，而后能获取每一个选项，及选项的参数，并能根据选项及桉树做出特定的操作。比如：<br>adminuser.sh –add tom,jerry –del tom,blair -v|–verbose -h|–help<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">#</div><div class="line">DEBUG=0</div><div class="line">ADD=0</div><div class="line">DEL=0</div><div class="line"></div><div class="line">for I in `seq 0 $#`; do</div><div class="line">if [ $# -gt 0 ]; then</div><div class="line">case $1 in</div><div class="line">-v|--verbose)</div><div class="line">  DEBUG=1</div><div class="line">  shift ;;</div><div class="line">-h|--help)</div><div class="line">  echo &quot;Usage: `basename $0` --add USER_LIST --del USER_LIST -v|--verbose -h|--help&quot;</div><div class="line">  exit 0</div><div class="line">  ;;</div><div class="line">--add)</div><div class="line">  ADD=1</div><div class="line">  ADDUSERS=$2</div><div class="line">  shift 2</div><div class="line">  ;;</div><div class="line">--del)</div><div class="line">  DEL=1</div><div class="line">  DELUSERS=$2</div><div class="line">  shift 2</div><div class="line">  ;;</div><div class="line">*)</div><div class="line">  echo &quot;Usage: `basename $0` --add USER_LIST --del USER_LIST -v|--verbose -h|--help&quot;</div><div class="line">  exit 7</div><div class="line">  ;;</div><div class="line">esac</div><div class="line">fi</div><div class="line">done</div><div class="line"></div><div class="line">if [ $ADD -eq 1 ]; then</div><div class="line">  for USER in `echo $ADDUSERS | sed &apos;s@,@ @g&apos;`; do</div><div class="line">    if id $USER &amp;&gt; /dev/null; then</div><div class="line">      [ $DEBUG -eq 1 ] &amp;&amp; echo &quot;$USER exists.&quot;</div><div class="line">    else</div><div class="line">      useradd $USER</div><div class="line">      [ $DEBUG -eq 1 ] &amp;&amp; echo &quot;Add user $USER finished.&quot;</div><div class="line">    fi</div><div class="line">  done</div><div class="line">fi</div><div class="line"></div><div class="line">if [ $DEL -eq 1 ]; then</div><div class="line">  for USER in `echo $DELUSERS | sed &apos;s@,@ @g&apos;`; do</div><div class="line">    if id $USER &amp;&gt; /dev/null; then</div><div class="line">      userdel -r $USER</div><div class="line">      [ $DEBUG -eq 1 ] &amp;&amp; echo &quot;Delete $USER finished.&quot;</div><div class="line">    else</div><div class="line">      [ $DEBUG -eq 1 ] &amp;&amp; echo &quot;$USER not exist.&quot;</div><div class="line">    fi</div><div class="line">  done</div><div class="line">fi</div></pre></td></tr></table></figure></p>
+<p>示例4：<br>写一个脚本showlogged.sh，其用法格式为：<br>showlogged.sh -v -v -h|–help<br>其中，-h选项只能单独使用，业内关于显示帮助信息；-c选项时，显示当前期待能够上登录的所有用户数；如果同时使用了-v选项，则既显示同时登录的用户数，又显示登录的用户的相关信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">#</div><div class="line">declare -i SHOWNUM=0</div><div class="line">declare -i SHOWUSERS=0</div><div class="line"></div><div class="line">for I in `seq 1 $#`; do</div><div class="line">  if [ $# -gt 0 ]; then</div><div class="line">    case $1 in</div><div class="line">    -h|--help)</div><div class="line">      echo &quot;Usage: `basename $0` -h|--help -c|--count -v|--verbose&quot;</div><div class="line">      exit 0 ;;</div><div class="line">    -v|--verbose)</div><div class="line">      let SHOWUSERS=1</div><div class="line">      shift ;;</div><div class="line">    -c|--count)</div><div class="line">      let SHOWNUM=1</div><div class="line">      shift ;;</div><div class="line">    *)</div><div class="line">      echo &quot;Usage: `basename $0` -h|--help -c|--count -v|--verbose&quot;</div><div class="line">      exit 8 ;;</div><div class="line">    esac</div><div class="line">  fi</div><div class="line">done</div><div class="line"></div><div class="line">if [ $SHOWNUM -eq 1 ]; then</div><div class="line">  echo &quot;Logged users: `who | wc -l`.&quot;</div><div class="line">  if [ $SHOWUSERS -eq 1 ]; then</div><div class="line">    echo &quot;They are:&quot;</div><div class="line">    who</div><div class="line">  fi</div><div class="line">fi</div></pre></td></tr></table></figure>
+            
+        
+        </div>
+        
+            
+            
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2017/05/10/bash_循环for语句/" id="art-left" class="art-right">
+                <span class="next-title">
+                    bash循环结构for语句<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2017/05/08/bash_选择if语句/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>bash选择结构if语句
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2016 ~ 2017</span>
+        <span>❤</span>
+        <span>nigaha</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="http://nigaha.com"> 眼一睁 </a>
+        </span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+<script src="/script/search.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.mobileHeader();
+    Nlvi.back2top();
+    Nlvi.smoothScroll();
+    Nlvi.onView();
+    Nlvi.showToc();
+    Nlvi.showComments();
+    Nlvi.showReward();
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    
+        
+    
+    <div class="backtop syuanpi dead toTop" id="backtop">
+    <i class="iconfont icon-up"></i>
+    <span style="text-align:center;font-family:Georgia;"><span style="font-family:Georgia;" id="scrollpercent">1</span>%</span>
+</div>
+    
+    <div class="search" id="search">
+        <div class="mask" id="mask"></div>
+        <div class="search-wrapper syuanpi">
+            <h1 id="search-header" class="syuanpi">搜索一下？</h1>
+            <div class="input">
+                <input type="text" id="local-search-input" results="0" name="">
+            </div>
+            <div id="local-search-result"></div>
+        </div>
+    </div>
+    <script>
+    var GREETING = {
+        morning: "当我们探索时，就要发现到真理",
+        noon: "人的天职在于勇于探索真理。",
+        after: "一件事实是一条没有性别的真理",
+        night: "真理有时可能变得黯淡，但它永远不会熄灭",
+        midnight: "真理在人那里获得生命力，并且展现出来"
+    }
+    $(document).ready(function(){
+        Nlvi.search();
+    });
+    </script>
+
+</body>
+</html>
